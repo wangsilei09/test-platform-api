@@ -14,6 +14,13 @@ export function useProjectApi() {
         data,
       });
     },
+    getAll: (data) => {
+      return request({
+        url: '/project/getAllProject',
+        method: 'POST',
+        data,
+      });
+    },
     saveOrUpdate(data) {
       return request({
         url: '/project/saveOrUpdate',

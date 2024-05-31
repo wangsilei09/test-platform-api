@@ -126,7 +126,8 @@ const deleted = (row) => {
     cancelButtonText: '取消',
     type: 'warning',
   })
-      .then(() => {
+      .then(async () => {
+        await useMenuApi().deleted({id: row.id})
         ElMessage.success('删除成功');
       })
       .catch(() => {

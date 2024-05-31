@@ -63,6 +63,7 @@
                            v-model="state.form.project_id"
                            placeholder="选择所属项目"
                            filterable
+                           @change="changeProject"
                            style="width: 100%;"
                 >
                   <el-option
@@ -71,6 +72,41 @@
                       :label="project.name"
                       :value="project.id">
                     <span style="float: left">{{ project.name }}</span>
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="所属模块：" prop="project_id">
+                <el-select size="small"
+                           v-model="state.form.module_id"
+                           placeholder="选择所属项目"
+                           filterable
+                           @change="changeModule"
+                           style="width: 100%;"
+                >
+                  <el-option
+                      v-for="module in state.moduleList"
+                      :key="module.id"
+                      :label="module.name"
+                      :value="module.id">
+                    <span style="float: left">{{ module.name }}</span>
+                  </el-option>
+                </el-select>
+              </el-form-item>
+
+              <el-form-item label="所属功能：" prop="project_id">
+                <el-select size="small"
+                           v-model="state.form.story_id"
+                           placeholder="选择所属项目"
+                           filterable
+                           style="width: 100%;"
+                >
+                  <el-option
+                      v-for="story in state.storyList"
+                      :key="story.id"
+                      :label="story.name"
+                      :value="story.id">
+                    <span style="float: left">{{ story.name }}</span>
                   </el-option>
                 </el-select>
               </el-form-item>
@@ -225,7 +261,7 @@
 </template>
 
 <script setup name="EditApiCase">
-import {onActivated, onMounted, reactive, ref, watch} from 'vue';
+import {onActivated, onMounted, reactive, ref} from 'vue';
 import {ElMessage} from "element-plus";
 import {useApiCaseApi} from "/@/api/useAutoApi/apiCase";
 import {useRoute, useRouter} from "vue-router"
@@ -238,6 +274,8 @@ import {handleEmpty} from "/@/utils/other";
 import ReportDetail from "/@/components/Z-Report/ApiReport/ReportInfo/ReportDetail.vue"
 import {getStepTypeInfo, getStepTypesByUse} from "/@/utils/case";
 import {ArrowDown} from "@element-plus/icons";
+import {useStoryApi} from "/@/api/useAutoApi/story";
+import {useModuleApi} from "/@/api/useAutoApi/module";
 
 const createForm = () => {
   return {
@@ -245,6 +283,8 @@ const createForm = () => {
     env_id: null, // 环境id
     step_rely: 1, // 步骤依赖
     project_id: '', // 关联项目
+    module_id: '', // 模块id
+    story_id: '', // 功能id
     remarks: '', // 简要描述
     step_data: [],
     variables: [],
@@ -264,10 +304,18 @@ const state = reactive({
   rules: {
     name: [{required: true, message: '请输入用例名', trigger: 'blur'}],
     project_id: [{required: true, message: '请选择所属项目', trigger: 'blur'}],
+    module_id: [{required: true, message: '请选择所属项目', trigger: 'blur'}],
     // env_id: [{required: true, message: '请选择运行环境', trigger: 'blur'}],
   },
   // project
   projectList: [],
+  projectQuery: {},
+  // 模块
+  moduleList: [],
+  moduleQuery: {page: 1, pageSize: 10000},
+  // 功能
+  storyList: [],
+  storyQuery: {page: 1, pageSize: 10000},
   // environment
   envList: [],
   // tabs
@@ -285,6 +333,8 @@ const initData = async () => {
   if (route.query.id) {
     let {data} = await useApiCaseApi().getCaseInfo({id: route.query.id})
     state.form = data
+    state.moduleList.push({id: data.module_id, name: data.module_name})
+    state.storyList.push({id: data.story_id, name: data.story_name})
   } else {
     state.form = createForm()
   }
@@ -311,8 +361,38 @@ const handleStepData = (step_data) => {
 const getProjectList = async () => {
   let {data} = await useProjectApi().getList({page: 1, pageSize: 1000})
   state.projectList = data.rows
-
 };
+
+const changeProject = (val) => {
+  state.form.module_id = null
+  state.form.story_id = null
+  state.storyList = []
+  state.moduleList = []
+  state.moduleQuery.project_id = val
+  getModuleList()
+}
+
+// 模块
+const getModuleList = () => {
+  useModuleApi().getList(state.moduleQuery).then((res) => {
+    state.moduleList = res.data.rows
+  })
+};
+
+const changeModule = (val) => {
+  state.form.story_id = null
+  state.storyList = []
+  state.storyQuery.module_id = val
+  getStoryList()
+}
+
+// 模块
+const getStoryList = async () => {
+  let {data} = await useStoryApi().getList(state.storyQuery)
+  state.storyList = data.rows
+};
+
+//
 
 // 新增修改
 const saveOrUpdate = () => {

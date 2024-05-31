@@ -14,6 +14,13 @@ export function useModuleApi() {
         data,
       });
     },
+    getAll: (data) => {
+      return request({
+        url: '/module/getAllModule',
+        method: 'POST',
+        data,
+      });
+    },
     saveOrUpdate(data) {
       return request({
         url: '/module/saveOrUpdate',

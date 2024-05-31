@@ -7,7 +7,7 @@
           placeholder="选择运行环境"
           filterable style="width: 30%;">
         <el-option
-            v-for="env in state.envList"
+            v-for="env in envList"
             :key="env.id + env.name"
             :label="env.name"
             :value="env.id">
@@ -28,6 +28,7 @@
         draggable
         title="选择用例"
         v-model="state.showCasePage"
+        append-to-body
         width="80%">
       <SelectCase ref="selectCaseRef"></SelectCase>
       <template #footer>
@@ -45,18 +46,21 @@
 import SelectCase from "/@/components/Z-StepController/caseInfo/SelectCase.vue"
 
 
-import {h, onMounted, reactive, ref, watch} from "vue";
+import {h, onMounted, reactive, ref} from "vue";
 import {ElButton} from "element-plus";
 import {useEnvApi} from "/@/api/useAutoApi/env";
 import {useTimedTasksApi} from "/@/api/useAutoApi/timedTasks";
 
-const props = defineProps({
+defineProps({
   taskId: {
     type: Number,
     default: () => null
   },
   envId: {
     type: Number,
+  },
+  envList: {
+    type: Array,
   }
 })
 
@@ -93,11 +97,11 @@ const state = reactive({
     },
   ],
   // env
-  envList: [],
-  envQuery: {
-    page: 1,
-    pageSize: 1000
-  },
+  // envList: [],
+  // envQuery: {
+  //   page: 1,
+  //   pageSize: 1000
+  // },
 })
 
 
@@ -113,12 +117,12 @@ const initData = (taskId, envId) => {
 
 
 // env
-const getEnvList = () => {
-  useEnvApi().getList(state.envQuery)
-      .then(res => {
-        state.envList = res.data.rows
-      })
-};
+// const getEnvList = () => {
+//   useEnvApi().getList(state.envQuery)
+//       .then(res => {
+//         state.envList = res.data.rows
+//       })
+// };
 
 
 /*添加用例*/
@@ -159,7 +163,7 @@ const getCaseIds = () => {
 // 页面加载时
 onMounted(() => {
   initData()
-  getEnvList();
+  // getEnvList();
 });
 
 defineExpose({

@@ -130,12 +130,12 @@ const state = reactive({
       ratio: 0,
       ratioDescribe: '(当月新增接口用例数量-上月新增接口用例数量)/上月新增接口用例数量×100%'
     },
-    {
-      number: 0,
-      name: 'UI用例数量',
-      ratio: 0,
-      ratioDescribe: '(当月新增UI用例数量-上月新增UI用例数量)/上月新增UI用例数量×100%'
-    },
+    // {
+    //   number: 0,
+    //   name: 'UI用例数量',
+    //   ratio: 0,
+    //   ratioDescribe: '(当月新增UI用例数量-上月新增UI用例数量)/上月新增UI用例数量×100%'
+    // },
     {number: 0, name: '任务数量', ratio: 0, ratioDescribe: '(当月新增任务数量-上月新增任务数量)/上月新增任务数量×100%'},
   ],
   global: {
@@ -435,12 +435,12 @@ const getCountStatistics = async () => {
       ratio: 0,
       ratioDescribe: '(当月新增接口用例数量-上月新增接口用例数量)/上月新增接口用例数量×100%'
     },
-    {
-      number: data.ui_case_count,
-      name: 'UI用例数量',
-      ratio: 0,
-      ratioDescribe: '(当月新增UI用例数量-上月新增UI用例数量)/上月新增UI用例数量×100%'
-    },
+    // {
+    //   number: data.ui_case_count,
+    //   name: 'UI用例数量',
+    //   ratio: 0,
+    //   ratioDescribe: '(当月新增UI用例数量-上月新增UI用例数量)/上月新增UI用例数量×100%'
+    // },
     {
       number: data.task_count,
       name: '任务数量',

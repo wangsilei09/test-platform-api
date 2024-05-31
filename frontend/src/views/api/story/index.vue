@@ -25,10 +25,10 @@
 
 <script setup name="apiModule">
 import {defineAsyncComponent, h, onMounted, reactive, ref} from 'vue';
-import {ElButton, ElMessage, ElMessageBox} from 'element-plus';
-import {useModuleApi} from "/@/api/useAutoApi/module";
+import {ElButton, ElLink, ElMessage, ElMessageBox} from 'element-plus';
+import {useStoryApi} from "/@/api/useAutoApi/story";
 
-const Edit = defineAsyncComponent(() => import("./EditModule.vue"))
+const Edit = defineAsyncComponent(() => import("./EditStory.vue"))
 // 定义数据
 const tableRef = ref();
 const EditRef = ref();
@@ -46,12 +46,29 @@ const state = reactive({
       }, () => row.name)
     },
     {key: 'project_name', label: '所属项目', width: '', align: 'center', show: true},
-    {key: 'test_user', label: '测试人员', width: '', align: 'center', show: true},
-    {key: 'dev_user', label: '开发人员', width: '', align: 'center', show: true},
-    {key: 'case_count', label: '用例数', width: '', align: 'center', show: true},
-    {key: 'simple_desc', label: '描述', width: '', align: 'center', show: true},
-    {key: 'remarks', label: '备注', width: '', align: 'center', show: true},
-    {key: 'config_id', label: '关联配置', width: '', align: 'center', show: true},
+    {key: 'module_name', label: '所属模块', width: '', align: 'center', show: true},
+    {
+      key: 'story_url', label: '需求链接', width: '', align: 'center', show: true,
+      render: ({row}) => h(ElLink,
+          {
+            href: row.story_url,
+            target: "_blank",
+            type: "primary"
+          },
+          row.story_url)
+    },
+    {
+      key: 'jira_task', label: 'jira任务', width: '', align: 'center', show: true,
+      render: ({row}) => h(ElLink,
+          {
+            href: row.jira_task,
+            target: "_blank",
+            type: "primary"
+          },
+          row.jira_task)
+
+    },
+    {key: 'remarks', label: '备注', width: '150', align: 'center', show: true},
     {key: 'updation_date', label: '更新时间', width: '150', align: 'center', show: true},
     {key: 'updated_by_name', label: '更新人', width: '', align: 'center', show: true},
     {key: 'creation_date', label: '创建时间', width: '150', align: 'center', show: true},
@@ -86,7 +103,7 @@ const state = reactive({
 // 初始化表格数据
 const getList = () => {
   tableRef.value.openLoading()
-  useModuleApi().getList(state.listQuery)
+  useStoryApi().getList(state.listQuery)
       .then(res => {
         state.listData = res.data.rows
         state.total = res.data.rowTotal
@@ -115,7 +132,7 @@ const deleted = (row) => {
     type: 'warning',
   })
       .then(() => {
-        useModuleApi().deleted({id: row.id})
+        useStoryApi().deleted({id: row.id})
             .then(() => {
               ElMessage.success('删除成功');
               getList()

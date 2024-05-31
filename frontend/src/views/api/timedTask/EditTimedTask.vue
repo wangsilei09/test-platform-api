@@ -120,11 +120,70 @@
         <el-col :span="14" class="task-card">
           <el-card>
             <el-tabs v-model="state.activeTabName">
+
               <el-tab-pane label="用例" name="case">
                 <CaseInfo :task_id="state.form.id"
                           :envId="state.form.case_env_id"
+                          :env-list="state.envList"
                           ref="taskCaseInfoRef"></CaseInfo>
               </el-tab-pane>
+
+              <el-tab-pane label="项目/模块" name="project">
+                <el-form label-position="top">
+                  <el-form-item label="运行环境：">
+                    <div style="display: flex; width: 100%; justify-content: space-between">
+                      <el-select
+                          v-model="state.form.project_env_id"
+                          placeholder="选择运行环境"
+                          filterable style="width: 100%;">
+                        <el-option
+                            v-for="env in state.envList"
+                            :key="env.id + env.name"
+                            :label="env.name"
+                            :value="env.id">
+                          <span style="float: left">{{ env.name }}</span>
+                        </el-option>
+                      </el-select>
+                    </div>
+                  </el-form-item>
+
+                  <el-form-item label="运行项目：">
+                    <el-select
+                        v-model="state.form.project_ids"
+                        placeholder="选择项目"
+                        multiple
+                        filterable style="width: 100%;">
+                      <el-option
+                          v-for="project in state.projectList"
+                          :key="project.id + project.name"
+                          :label="project.name"
+                          :value="project.id">
+                        <span style="float: left">{{ project.name }}</span>
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+
+
+                  <el-form-item label="运行模块：">
+                    <el-select
+                        v-model="state.form.module_ids"
+                        placeholder="选择项目"
+                        multiple
+                        filterable style="width: 100%;">
+                      <el-option
+                          v-for="module in state.moduleList"
+                          :key="module.id + module.name"
+                          :label="module.name"
+                          :value="module.id">
+                        <span style="float: left">{{ module.name }}</span>
+                      </el-option>
+                    </el-select>
+                  </el-form-item>
+
+                </el-form>
+
+              </el-tab-pane>
+
             </el-tabs>
           </el-card>
         </el-col>
@@ -146,6 +205,8 @@ import {useTimedTasksApi} from "/@/api/useAutoApi/timedTasks";
 import {ElButton, ElMessage} from "element-plus";
 import {useProjectApi} from "/@/api/useAutoApi/project";
 import CaseInfo from "./caseInfo.vue"
+import {useModuleApi} from "/@/api/useAutoApi/module";
+import {useEnvApi} from "/@/api/useAutoApi/env";
 
 const emit = defineEmits(["getList"])
 
@@ -165,6 +226,9 @@ const createForm = () => {
     case_env_id: null, // 用例环境id
     interval_period: "",
     interval_every: 1,
+    project_env_id: null,
+    project_ids: [],
+    module_ids: [],
   }
 }
 const formRef = ref()
@@ -198,9 +262,9 @@ const state = reactive({
     project_id: null,
     name: '',
   },
-  // suite
-  suiteList: [], // 套件数据
-  suiteListQuery: {   //
+  // env
+  envList: [], // 套件数据
+  envListQuery: {   //
     page: 1,
     pageSize: 1000,
     project_id: null,
@@ -228,6 +292,21 @@ const getProjectList = () => {
       })
 };
 
+// 获取项目列表
+const getModuleList = () => {
+  useModuleApi().getAll({})
+      .then(res => {
+        state.moduleList = res.data
+      })
+};
+
+
+const getEnvList = () => {
+  useEnvApi().getList(state.envListQuery)
+      .then(res => {
+        state.envList = res.data.rows
+      })
+};
 
 // 切换运行类型时清空
 const radioChange = () => {
@@ -243,6 +322,10 @@ const openDialog = (type, row) => {
   } else {
     state.form = createForm()
   }
+
+  getProjectList();
+  getModuleList();
+  getEnvList();
 
   nextTick(() => {
     taskCaseInfoRef.value.initData(state.form.id, state.form.case_env_id)
@@ -260,12 +343,12 @@ const saveOrUpdate = () => {
     if (valid) {
       let caseEnvId = taskCaseInfoRef.value.getCaseEnvId()
       let caseIds = taskCaseInfoRef.value.getCaseIds()
-      if (caseIds.length === 0) {
-        return ElMessage.warning("请选择需要执行的用例!")
-      }
-      if (!caseEnvId) {
-        return ElMessage.warning("请选择api运行环境!")
-      }
+      // if (caseIds.length === 0) {
+      //   return ElMessage.warning("请选择需要执行的用例!")
+      // }
+      // if (!caseEnvId) {
+      //   return ElMessage.warning("请选择api运行环境!")
+      // }
       state.form.case_ids = caseIds
       state.form.case_env_id = caseEnvId
 
@@ -318,7 +401,9 @@ const changeScheduleMode = (val) => {
 
 // 页面加载时
 onMounted(() => {
-  getProjectList();
+  // getProjectList();
+  // getModuleList();
+  // getEnvList();
 });
 
 defineExpose({

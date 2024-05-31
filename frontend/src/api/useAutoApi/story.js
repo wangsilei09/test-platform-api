@@ -5,25 +5,25 @@ import request from '/@/utils/request';
  * @method getProjectList 获取项目列表
  * @method getMenuTest 获取后端动态路由菜单(test)
  */
-export function useModuleApi() {
+export function useStoryApi() {
   return {
     getList: (data) => {
       return request({
-        url: '/module/list',
+        url: '/story/list',
         method: 'POST',
         data,
       });
     },
     saveOrUpdate(data) {
       return request({
-        url: '/module/saveOrUpdate',
+        url: '/story/saveOrUpdate',
         method: 'POST',
         data
       })
     },
     deleted: (data) => {
       return request({
-        url: '/module/deleted',
+        url: '/story/deleted',
         method: 'POST',
         data,
       });
