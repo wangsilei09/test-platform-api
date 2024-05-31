@@ -110,14 +110,15 @@ async def async_run_testcase(case_id: typing.Union[str, int], report_id: [str, i
         testcase = api_case_info.get_testcases()
         summary = await sync_to_async(runner.run_tests)(testcase)
         logger.info(f"执行成功！--- report_id: {report_id}")
-        report_params.run_count = summary.run_count
-        report_params.run_success_count = summary.run_success_count
-        report_params.run_skip_count = summary.run_skip_count
-        report_params.run_fail_count = summary.run_fail_count
-        report_params.run_err_count = summary.run_err_count
-        report_params.duration = summary.duration
-        report_params.start_time = summary.start_time
-        report_params.actual_run_count = summary.actual_run_count
+        report_params.run_count += summary.run_count
+        report_params.run_success_count += summary.run_success_count
+        report_params.run_skip_count += summary.run_skip_count
+        report_params.run_fail_count += summary.run_fail_count
+        report_params.run_err_count += summary.run_err_count
+        report_params.duration += summary.duration
+        report_params.actual_run_count += summary.actual_run_count
+        if not report_params.start_time:
+            report_params.start_time = summary.start_time
         summary_params = TestReportSaveSchema.parse_obj(report_params.dict())
         summary_params.success = summary.success
         await ReportService.save_report_info(summary_params)

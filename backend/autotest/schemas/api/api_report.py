@@ -29,7 +29,7 @@ class TestReportSaveSchema(BaseModel):
     id: int = Field(None, description="")
     name: str = Field(None, description="")
     start_time: str = Field(None, description="")
-    duration: float = Field(None, description="")
+    duration: float = Field(0.0, description="")
     case_id: typing.Union[str, int] = Field(None, description="")
     source_id: typing.Union[str, int] = Field(None, description="来源id")
     run_mode: int = Field(None, description="运行类型 10 同步， 20 异步, 30 定时任务")

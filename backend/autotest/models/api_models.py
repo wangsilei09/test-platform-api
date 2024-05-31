@@ -1,7 +1,7 @@
 import typing
 
 from sqlalchemy import Integer, String, Text, DateTime, BigInteger, func, \
-    distinct, text, and_, JSON, DECIMAL, select, update, Boolean, case
+    distinct, text, and_, JSON, DECIMAL, select, update, Boolean
 from sqlalchemy.orm import aliased, mapped_column
 
 from autotest.models.base import Base
@@ -14,6 +14,7 @@ from autotest.schemas.api.env import EnvQuery, BindingDataSourceIn, BindingFuncI
 from autotest.schemas.api.functions import FuncQuery
 from autotest.schemas.api.module import ModuleQuery
 from autotest.schemas.api.projectquery import ProjectQuery
+from autotest.schemas.api.story import StoryQuery
 
 
 class ProjectInfo(Base):
@@ -140,6 +141,75 @@ class ModuleInfo(Base):
             .outerjoin(u, u.id == cls.updated_by) \
             .outerjoin(ApiInfo, and_(cls.id == ApiInfo.module_id, ApiInfo.enabled_flag == 1)) \
             .group_by(cls.id).order_by(text(order_by))
+        return await cls.pagination(stmt)
+
+    @classmethod
+    async def get_module_by_project_id(cls, project_id: int):
+        """查询项目是否有关联模块"""
+        stmt = select(cls.id).where(cls.project_id == project_id, cls.enabled_flag == 1)
+        return await cls.get_result(stmt)
+
+    @classmethod
+    async def get_module_by_name(cls, name: str):
+        stmt = select(cls.id).where(cls.name == name, cls.enabled_flag == 1)
+        return await cls.get_result(stmt)
+
+    @classmethod
+    def get_module_by_id(cls, id):
+        return cls.query.filter(cls.id == id, cls.enabled_flag == 1).first()
+
+    @classmethod
+    def get_module_by_module_packages(cls, module_packages):
+        return cls.query.filter(cls.module_packages == module_packages, cls.enabled_flag == 1).all()
+
+    @classmethod
+    def get_all_count(cls):
+        return cls.query.filter(cls.enabled_flag == 1).count()
+
+    @classmethod
+    def get_module_by_packages_id(cls, packages_id):
+        return cls.query.filter(cls.packages_id == packages_id, cls.enabled_flag == 1).first()
+
+
+class StoryInfo(Base):
+    """功能信息"""
+    __tablename__ = 'story_info'
+
+    name = mapped_column(String(64), nullable=False, comment='功能名称', index=True)
+    project_id = mapped_column(Integer, comment='归属项目id')
+    module_id = mapped_column(Integer, comment='模块id')
+    story_url = mapped_column(String(255), comment='其他信息')
+    jira_task = mapped_column(String(255), comment='其他信息')
+    remarks = mapped_column(String(255), comment='其他信息')
+
+    @classmethod
+    async def get_list(cls, params: StoryQuery):
+        q = [cls.enabled_flag == 1]
+        if params.name:
+            q.append(cls.name.like('%{}%'.format(params.name)))
+        if params.project_id:
+            q.append(cls.project_id == params.project_id)
+        if params.project_name:
+            q.append(ProjectInfo.name.like('%{}%'.format(params.project_name)))
+        if params.module_id:
+            q.append(ModuleInfo.id == params.module_id)
+
+        # if packages_id:
+        #     q.append(cls.packages_id == packages_id)
+
+        u = aliased(User)
+
+        stmt = select(cls.get_table_columns(),
+                      User.nickname.label('created_by_name'),
+                      u.nickname.label('updated_by_name'),
+                      ProjectInfo.name.label('project_name'),
+                      ModuleInfo.name.label('module_name'),
+                      ).where(*q) \
+            .outerjoin(ProjectInfo, and_(cls.project_id == ProjectInfo.id, ProjectInfo.enabled_flag == 1)) \
+            .outerjoin(User, User.id == cls.created_by) \
+            .outerjoin(u, u.id == cls.updated_by) \
+            .outerjoin(ModuleInfo, ModuleInfo.id == cls.module_id) \
+            .group_by(cls.id).order_by(cls.id.desc())
         return await cls.pagination(stmt)
 
     @classmethod
@@ -536,6 +606,8 @@ class ApiCase(Base):
 
     name = mapped_column(String(64), nullable=False, comment='名称', index=True)
     project_id = mapped_column(BigInteger, nullable=False, comment='所属项目')
+    module_id = mapped_column(BigInteger, nullable=False, comment='模块id')
+    story_id = mapped_column(BigInteger, nullable=False, comment='功能id')
     remarks = mapped_column(String(255), comment='备注')
     headers = mapped_column(JSON, comment='场景请求头')
     variables = mapped_column(JSON, comment='场景变量')
@@ -598,6 +670,35 @@ class ApiCase(Base):
         return await cls.get_result(stmt, True)
 
     @classmethod
+    async def get_by_id(cls, id: int):
+        u = aliased(User)
+        stmt = select(cls.get_table_columns(),
+                      User.nickname.label('created_by_name'),
+                      ModuleInfo.name.label('module_name'),
+                      StoryInfo.name.label('story_name'),
+                      u.nickname.label('updated_by_name')) \
+            .where(cls.id == id, cls.enabled_flag == 1) \
+            .outerjoin(ModuleInfo, ModuleInfo.id == cls.module_id) \
+            .outerjoin(StoryInfo, StoryInfo.id == cls.story_id) \
+            .outerjoin(User, User.id == cls.created_by) \
+            .outerjoin(u, u.id == cls.updated_by)
+        return await cls.get_result(stmt, True)
+
+    @classmethod
+    async def get_by_module_ids(cls, module_ids: list):
+        if not module_ids:
+            return []
+        stmt = select(cls.id).where(cls.enabled_flag == 1, cls.module_id.in_(module_ids))
+        return await cls.get_result(stmt)
+
+    @classmethod
+    async def get_by_project_ids(cls, project_ids: list):
+        if not project_ids:
+            return []
+        stmt = select(cls.id).where(cls.enabled_flag == 1, cls.project_id.in_(project_ids))
+        return await cls.get_result(stmt)
+
+    @classmethod
     async def get_case_by_ids(cls, ids: typing.List[int]):
         """根据套件ids查询用例"""
         stmt = select(cls.get_table_columns()).where(cls.id.in_(ids), cls.enabled_flag == 1)
@@ -617,16 +718,10 @@ class ApiCase(Base):
         return await cls.get_result(stmt, first=True)
 
     @classmethod
-    def statistic_project_case_number(cls):
-        """统计项目用例数量"""
-        return cls.query.outerjoin(ProjectInfo, ProjectInfo.id == cls.project_id) \
-            .outerjoin(User, User.id == cls.created_by) \
-            .with_entities(ProjectInfo.name,
-                           func.count(cls.id).label('case_num'),
-                           User.username.label('employee_code'),
-                           User.nickname.label('username'),
-                           ) \
-            .filter(cls.enabled_flag == 1)
+    async def get_api_by_story_id(cls, story_id: typing.Any):
+        """统计用户创建的用例数量"""
+        stmt = select(cls.get_table_columns()).where(cls.enabled_flag == 1, cls.story_id == story_id)
+        return await cls.get_result(stmt, first=True)
 
 
 class ApiTestReport(Base):

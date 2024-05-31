@@ -97,7 +97,7 @@ class ApiCaseService:
     @staticmethod
     async def get_case_info(params: ApiCaseId) -> typing.Dict:
         """获取用例信息"""
-        api_case = await ApiCase.get(params.id, to_dict=True)
+        api_case = await ApiCase.get_by_id(params.id)
         await ApiCaseService.set_step_data(api_case)
         if not api_case:
             raise ValueError('不存在当前套件！')

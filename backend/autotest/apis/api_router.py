@@ -6,6 +6,7 @@ from fastapi import APIRouter
 from autotest.apis.api import (
     project,
     module,
+    story,
     api_info,
     api_case,
     api_report,
@@ -27,6 +28,7 @@ app_router = APIRouter()
 # api
 app_router.include_router(project.router, prefix="/project", tags=["project"])
 app_router.include_router(module.router, prefix="/module", tags=["module"])
+app_router.include_router(story.router, prefix="/story", tags=["story"])
 app_router.include_router(api_info.router, prefix="/apiInfo", tags=["apiInfo"])
 app_router.include_router(api_case.router, prefix="/apiCase", tags=["apiCase"])
 app_router.include_router(api_report.router, prefix="/report", tags=["apiReport"])

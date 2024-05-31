@@ -1,17 +1,17 @@
 /*
  Navicat Premium Data Transfer
 
- Source Server         : xiaobaicodes
+ Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 50743
- Source Host           : xiaobaicodes
+ Source Server Version : 50744
+ Source Host           : localhost:3306
  Source Schema         : zerorunner
 
  Target Server Type    : MySQL
- Target Server Version : 50743
+ Target Server Version : 50744
  File Encoding         : 65001
 
- Date: 24/10/2023 12:01:37
+ Date: 31/05/2024 14:10:32
 */
 
 SET NAMES utf8mb4;
@@ -25,6 +25,8 @@ CREATE TABLE `api_case`  (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `project_id` bigint(22) NULL DEFAULT NULL,
+  `module_id` bigint(20) NULL DEFAULT NULL,
+  `story_id` bigint(20) NULL DEFAULT NULL,
   `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
   `enabled_flag` tinyint(1) NULL DEFAULT NULL COMMENT '是否删除',
   `updation_date` datetime NULL DEFAULT NULL COMMENT '更新时间',
@@ -96,11 +98,7 @@ CREATE TABLE `api_case_step`  (
   INDEX `id_index`(`id`) USING BTREE,
   INDEX `name_index`(`name`) USING BTREE,
   INDEX `enabled_flag_index`(`enabled_flag`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
-
--- ----------------------------
--- Records of api_case_step
--- ----------------------------
+) ENGINE = InnoDB AUTO_INCREMENT = 5 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Table structure for api_info
@@ -143,7 +141,7 @@ CREATE TABLE `api_info`  (
   INDEX `id_index`(`id`) USING BTREE,
   INDEX `name_index`(`name`) USING BTREE,
   INDEX `enabled_flag_index`(`enabled_flag`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of api_info
@@ -351,7 +349,7 @@ CREATE TABLE `celery_periodic_task`  (
 -- ----------------------------
 -- Records of celery_periodic_task
 -- ----------------------------
-INSERT INTO `celery_periodic_task` VALUES (13, 'bzx_test001', 'zerorunner.batch_async_run_testcase', NULL, NULL, NULL, NULL, NULL, '{\"case_ids\": [\"29\"], \"case_env_id\": 24, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 588, \"run_type\": \"timed_task\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 1, \"exec_user_name\": \"\\u5c0f\\u767d\"}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 588, NULL, NULL, '29', NULL, NULL, NULL, '2023-10-23 12:09:55', '2023-10-23 12:42:21', 1, 1, 1, NULL, '9955ba80ac1f48119b5096178fd75809', 'interval', 24, 1, 'minutes', '测试任务bzx_', NULL);
+INSERT INTO `celery_periodic_task` VALUES (13, 'bzx_test001', 'zerorunner.batch_async_run_testcase', NULL, NULL, NULL, NULL, NULL, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 581, NULL, NULL, '1', NULL, NULL, NULL, '2023-10-23 12:09:55', '2024-05-30 20:29:45', 7, 1, 1, NULL, 'b664581770aa44bf875ee846a8a10d57', 'interval', 24, 1, 'minutes', '测试任务bzx_', NULL);
 INSERT INTO `celery_periodic_task` VALUES (16, '323', 'zerorunner.batch_async_run_testcase', 9, '1-2 * * * * ? ', NULL, NULL, NULL, '{\"case_ids\": [\"29\", \"30\"], \"case_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"323\", \"project_id\": 581, \"run_type\": 30, \"run_mode\": null, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', NULL, NULL, NULL, NULL, NULL, NULL, NULL, 0, NULL, 0, NULL, NULL, NULL, 581, NULL, NULL, '29,30', NULL, NULL, NULL, '2023-10-23 16:57:24', '2023-10-23 16:57:24', 7, 7, 1, NULL, 'c5f86daf0291470faab14ec8ba4f1bc6', 'interval', 25, 1, 'seconds', '', NULL);
 
 -- ----------------------------
@@ -373,7 +371,7 @@ CREATE TABLE `celery_periodic_task_changed`  (
 -- ----------------------------
 -- Records of celery_periodic_task_changed
 -- ----------------------------
-INSERT INTO `celery_periodic_task_changed` VALUES (1, '2023-10-23 16:57:24', NULL, NULL, '2023-10-23 16:57:24', NULL, NULL, NULL);
+INSERT INTO `celery_periodic_task_changed` VALUES (1, '2024-05-30 20:29:45', NULL, NULL, '2024-05-30 20:29:45', NULL, NULL, NULL);
 
 -- ----------------------------
 -- Table structure for celery_solar_schedule
@@ -416,7 +414,7 @@ CREATE TABLE `celery_task_record`  (
   `kwargs` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   `args` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 45 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of celery_task_record
@@ -431,6 +429,40 @@ INSERT INTO `celery_task_record` VALUES (7, '66af1f8c-69f3-4e45-b9c0-fff031cb2e5
 INSERT INTO `celery_task_record` VALUES (8, 'd28f262a-4901-41fb-a0b7-efa44aaab0fc', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2023-10-24 09:59:21', '2023-10-24 09:59:26', NULL, NULL, '2023-10-24 09:59:21', 0, '2023-10-24 09:59:21', 0, 1, '28674e45d31a4c2b88fdeaa97f4c5d06', NULL, '{\"case_id\": 31, \"case_env_id\": null, \"exec_user_id\": 1, \"exec_user_name\": \"\\u5c0f\\u767d\", \"__business_id\": 31, \"callback\": \"<function ApiCaseService.run_callback at 0x000002A3C7B05F70>\"}', '[]');
 INSERT INTO `celery_task_record` VALUES (9, 'dcf521f9-4fc8-48da-8c1c-45f33c6aa532', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2023-10-24 10:08:26', '2023-10-24 10:08:26', NULL, NULL, '2023-10-24 10:08:25', 0, '2023-10-24 10:08:25', 0, 1, '84f622f831894506a320539fcd8a22be', NULL, '{\"case_id\": 31, \"case_env_id\": 25, \"exec_user_id\": 7, \"exec_user_name\": \"admin\", \"__business_id\": 31, \"callback\": \"<function ApiCaseService.run_callback at 0x7ff448b42e50>\"}', '[]');
 INSERT INTO `celery_task_record` VALUES (10, '5536c2fa-a6ff-4641-a5d1-0b85a34bf354', 'celery_worker.tasks.ui_case.async_run_ui', 10, 'RUNNING', NULL, '2023-10-24 10:08:51', NULL, NULL, NULL, '2023-10-24 10:08:50', 0, '2023-10-24 10:08:50', 0, 1, NULL, 11, '{\"ui_id\": 11, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (11, 'c75be079-570b-4858-af6c-ba1354201996', 'zerorunner.batch_async_run_testcase', 20, 'RUNNING', NULL, '2024-05-30 20:40:46', NULL, NULL, NULL, '2024-05-30 20:40:45', 0, '2024-05-30 20:40:45', 0, 1, '8c1ff2a130a14a2fb5df455f59bf0e01', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (12, 'f9bd7ecc-53d6-4a92-80f6-753ffd7a6fa3', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:43:52', '2024-05-30 20:43:53', NULL, NULL, '2024-05-30 20:43:52', 0, '2024-05-30 20:43:52', 0, 1, '8c1ff2a130a14a2fb5df455f59bf0e01', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (13, '7de7c13c-7c8b-47d4-b284-9e49ad228ca3', 'zerorunner.batch_async_run_testcase', 20, 'FAILURE', 'name \'project_id\' is not defined', '2024-05-30 20:44:07', '2024-05-30 20:44:23', NULL, 'Traceback (most recent call last):\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\.venv\\lib\\site-packages\\celery\\app\\trace.py\", line 451, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\worker.py\", line 184, in __call__\n    return WorkerPool.run(self.run(*args, **kwargs))\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\autotest\\utils\\async_converter.py\", line 181, in run\n    raise error\n  File \"C:\\Users\\159346\\AppData\\Local\\Programs\\Python\\Python39\\lib\\asyncio\\tasks.py\", line 256, in __step\n    result = coro.send(None)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\tasks\\task_run.py\", line 29, in batch_async_run_testcase\n    case_ids = [case_info.get(\"id\") for case_info in await ApiCase.get_by_project_ids(params.project_ids)]\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\autotest\\models\\api_models.py\", line 696, in get_by_project_ids\n    if not project_id:\nNameError: name \'project_id\' is not defined\n', '2024-05-30 20:44:06', 0, '2024-05-30 20:44:06', 0, 1, 'b4542ade6e934af293b69e1f2325f5c2', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (14, 'bff64152-062a-43f9-bf40-95978a6b1e5d', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:44:23', '2024-05-30 20:44:24', NULL, NULL, '2024-05-30 20:44:23', 0, '2024-05-30 20:44:23', 0, 1, 'b4542ade6e934af293b69e1f2325f5c2', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (15, '32a6f7ce-53dc-4b69-b399-36d68d00dd63', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:44:24', '2024-05-30 20:44:24', NULL, NULL, '2024-05-30 20:44:23', 0, '2024-05-30 20:44:23', 0, 1, 'b4542ade6e934af293b69e1f2325f5c2', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (16, 'ee6a0168-5cf7-4d5f-8d22-785f5ebf89ac', 'zerorunner.batch_async_run_testcase', 20, 'FAILURE', 'name \'project_id\' is not defined', '2024-05-30 20:46:00', '2024-05-30 20:46:00', NULL, 'Traceback (most recent call last):\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\.venv\\lib\\site-packages\\celery\\app\\trace.py\", line 451, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\worker.py\", line 184, in __call__\n    return WorkerPool.run(self.run(*args, **kwargs))\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\autotest\\utils\\async_converter.py\", line 181, in run\n    raise error\n  File \"C:\\Users\\159346\\AppData\\Local\\Programs\\Python\\Python39\\lib\\asyncio\\tasks.py\", line 256, in __step\n    result = coro.send(None)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\tasks\\task_run.py\", line 31, in batch_async_run_testcase\n    case_ids = [case_info.get(\"id\") for case_info in await ApiCase.get_by_project_ids(params.project_ids)]\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\autotest\\models\\api_models.py\", line 696, in get_by_project_ids\n    if not project_id:\nNameError: name \'project_id\' is not defined\n', '2024-05-30 20:45:59', 0, '2024-05-30 20:45:59', 0, 1, 'ff9a3ce6d025419fb0ca1074573bfb34', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (17, 'de3748c5-4758-46cd-a692-b8aa6bb0bbe8', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:46:01', '2024-05-30 20:46:01', NULL, NULL, '2024-05-30 20:46:00', 0, '2024-05-30 20:46:00', 0, 1, 'ff9a3ce6d025419fb0ca1074573bfb34', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (18, 'ecb77dfc-8c44-41ab-ae9e-622105fc78df', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:46:01', '2024-05-30 20:46:02', NULL, NULL, '2024-05-30 20:46:01', 0, '2024-05-30 20:46:01', 0, 1, 'ff9a3ce6d025419fb0ca1074573bfb34', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"module\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (19, 'e0e09127-9ccc-4e11-9689-88e0373db8b7', 'zerorunner.batch_async_run_testcase', 20, 'SUCCESS', 'None', '2024-05-30 20:47:19', '2024-05-30 20:47:19', NULL, NULL, '2024-05-30 20:47:18', 0, '2024-05-30 20:47:18', 0, 1, '496b796c6af64417864203abad2c7d84', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (20, '69d29419-8530-4c92-8236-5a094be731fe', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:47:20', '2024-05-30 20:47:20', NULL, NULL, '2024-05-30 20:47:19', 0, '2024-05-30 20:47:19', 0, 1, '496b796c6af64417864203abad2c7d84', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (21, '5f5e01d1-a072-4739-b880-4da808c8ea86', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:47:20', '2024-05-30 20:47:21', NULL, NULL, '2024-05-30 20:47:20', 0, '2024-05-30 20:47:20', 0, 1, '496b796c6af64417864203abad2c7d84', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"module\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (22, '5daad264-7806-4dcb-987d-af79a7065dd4', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 20:47:21', '2024-05-30 20:47:21', NULL, NULL, '2024-05-30 20:47:20', 0, '2024-05-30 20:47:20', 0, 1, '496b796c6af64417864203abad2c7d84', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"project\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (23, '1eb1ebb1-7f6f-4d34-bf51-416c946ccc66', 'zerorunner.batch_async_run_testcase', 20, 'SUCCESS', 'None', '2024-05-30 21:00:16', '2024-05-30 21:00:16', NULL, NULL, '2024-05-30 21:00:15', 0, '2024-05-30 21:00:15', 0, 1, '184ddc18d4e34d01bc489901eb89e8ff', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (24, '41caec26-c48a-40a1-ad30-f41b4305b823', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:00:16', '2024-05-30 21:00:16', NULL, NULL, '2024-05-30 21:00:15', 0, '2024-05-30 21:00:15', 0, 1, '184ddc18d4e34d01bc489901eb89e8ff', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (25, '73e473ab-cda0-4f89-930e-ae583efe1cae', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:00:16', '2024-05-30 21:00:16', NULL, NULL, '2024-05-30 21:00:16', 0, '2024-05-30 21:00:16', 0, 1, '184ddc18d4e34d01bc489901eb89e8ff', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"module\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (26, '6759c7bc-dd22-4940-b367-894af90380cb', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:00:16', '2024-05-30 21:00:17', NULL, NULL, '2024-05-30 21:00:16', 0, '2024-05-30 21:00:16', 0, 1, '184ddc18d4e34d01bc489901eb89e8ff', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"project\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (27, 'f029ade0-2bb1-4e5c-9665-762537d8b77e', 'zerorunner.batch_async_run_testcase', 20, 'SUCCESS', 'None', '2024-05-30 21:01:20', '2024-05-30 21:01:21', NULL, NULL, '2024-05-30 21:01:20', 0, '2024-05-30 21:01:20', 0, 1, '1967039c685c4221984e1ca5979fb737', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (28, 'a4569ada-6866-4171-80f9-84391e434399', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'FAILURE', 'unsupported operand type(s) for +=: \'NoneType\' and \'float\'', '2024-05-30 21:01:21', '2024-05-30 21:01:22', NULL, 'Traceback (most recent call last):\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\.venv\\lib\\site-packages\\celery\\app\\trace.py\", line 451, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\worker.py\", line 184, in __call__\n    return WorkerPool.run(self.run(*args, **kwargs))\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\autotest\\utils\\async_converter.py\", line 181, in run\n    raise error\n  File \"C:\\Users\\159346\\AppData\\Local\\Programs\\Python\\Python39\\lib\\asyncio\\tasks.py\", line 256, in __step\n    result = coro.send(None)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\tasks\\test_case.py\", line 118, in async_run_testcase\n    report_params.duration += summary.duration\nTypeError: unsupported operand type(s) for +=: \'NoneType\' and \'float\'\n', '2024-05-30 21:01:21', 0, '2024-05-30 21:01:21', 0, 1, '1967039c685c4221984e1ca5979fb737', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (29, '85f6c2c7-4f3c-402e-9e71-9bbe49d6f5aa', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'FAILURE', 'unsupported operand type(s) for +=: \'NoneType\' and \'float\'', '2024-05-30 21:01:22', '2024-05-30 21:01:22', NULL, 'Traceback (most recent call last):\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\.venv\\lib\\site-packages\\celery\\app\\trace.py\", line 451, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\worker.py\", line 184, in __call__\n    return WorkerPool.run(self.run(*args, **kwargs))\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\autotest\\utils\\async_converter.py\", line 181, in run\n    raise error\n  File \"C:\\Users\\159346\\AppData\\Local\\Programs\\Python\\Python39\\lib\\asyncio\\tasks.py\", line 256, in __step\n    result = coro.send(None)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\tasks\\test_case.py\", line 118, in async_run_testcase\n    report_params.duration += summary.duration\nTypeError: unsupported operand type(s) for +=: \'NoneType\' and \'float\'\n', '2024-05-30 21:01:21', 0, '2024-05-30 21:01:21', 0, 1, '1967039c685c4221984e1ca5979fb737', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"module\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 12]');
+INSERT INTO `celery_task_record` VALUES (30, '518ec4d4-e8a1-4420-900a-d5421dbf26fd', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'FAILURE', 'unsupported operand type(s) for +=: \'NoneType\' and \'float\'', '2024-05-30 21:01:22', '2024-05-30 21:01:22', NULL, 'Traceback (most recent call last):\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\.venv\\lib\\site-packages\\celery\\app\\trace.py\", line 451, in trace_task\n    R = retval = fun(*args, **kwargs)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\worker.py\", line 184, in __call__\n    return WorkerPool.run(self.run(*args, **kwargs))\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\autotest\\utils\\async_converter.py\", line 181, in run\n    raise error\n  File \"C:\\Users\\159346\\AppData\\Local\\Programs\\Python\\Python39\\lib\\asyncio\\tasks.py\", line 256, in __step\n    result = coro.send(None)\n  File \"D:\\codes\\pythonProject\\test-platform-api\\backend\\celery_worker\\tasks\\test_case.py\", line 118, in async_run_testcase\n    report_params.duration += summary.duration\nTypeError: unsupported operand type(s) for +=: \'NoneType\' and \'float\'\n', '2024-05-30 21:01:22', 0, '2024-05-30 21:01:22', 0, 1, '1967039c685c4221984e1ca5979fb737', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 13]');
+INSERT INTO `celery_task_record` VALUES (31, 'ca175828-989d-4461-a04c-b6f920c966a7', 'zerorunner.batch_async_run_testcase', 20, 'SUCCESS', 'None', '2024-05-30 21:03:15', '2024-05-30 21:03:16', NULL, NULL, '2024-05-30 21:03:15', 0, '2024-05-30 21:03:15', 0, 1, 'c03369e6bad34721a8e6b6a0d347c4e5', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (32, '6b823010-8d3a-4827-8de0-7d8323f8c33b', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:03:16', '2024-05-30 21:03:16', NULL, NULL, '2024-05-30 21:03:15', 0, '2024-05-30 21:03:15', 0, 1, 'c03369e6bad34721a8e6b6a0d347c4e5', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (33, '98d919fe-106b-42df-9dd2-e5aa8e6dbe1f', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:03:17', '2024-05-30 21:03:17', NULL, NULL, '2024-05-30 21:03:16', 0, '2024-05-30 21:03:16', 0, 1, 'c03369e6bad34721a8e6b6a0d347c4e5', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"module\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 15]');
+INSERT INTO `celery_task_record` VALUES (34, 'ecfc79ec-a7ea-4802-b8b7-f674e2773cc8', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:03:17', '2024-05-30 21:03:17', NULL, NULL, '2024-05-30 21:03:16', 0, '2024-05-30 21:03:16', 0, 1, 'c03369e6bad34721a8e6b6a0d347c4e5', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 16]');
+INSERT INTO `celery_task_record` VALUES (35, '7d305a2b-1c77-42e7-9261-7c93e6423b91', 'zerorunner.batch_async_run_testcase', 20, 'SUCCESS', 'None', '2024-05-30 21:07:12', '2024-05-30 21:07:12', NULL, NULL, '2024-05-30 21:07:11', 0, '2024-05-30 21:07:11', 0, 1, 'fe10a30bedae49c396fe6f5e1fd2f106', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (36, '2da09ad2-6560-4d41-a5dd-657a0549428a', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:07:12', '2024-05-30 21:07:12', NULL, NULL, '2024-05-30 21:07:12', 0, '2024-05-30 21:07:12', 0, 1, 'fe10a30bedae49c396fe6f5e1fd2f106', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (37, '0947a16e-a6e1-47c4-8159-35de8fea7628', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:07:12', '2024-05-30 21:07:13', NULL, NULL, '2024-05-30 21:07:12', 0, '2024-05-30 21:07:12', 0, 1, 'fe10a30bedae49c396fe6f5e1fd2f106', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"module\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 18]');
+INSERT INTO `celery_task_record` VALUES (38, '59632a20-5ad2-4ca8-906d-2202486bf05f', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:07:13', '2024-05-30 21:07:13', NULL, NULL, '2024-05-30 21:07:12', 0, '2024-05-30 21:07:12', 0, 1, 'fe10a30bedae49c396fe6f5e1fd2f106', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 19]');
+INSERT INTO `celery_task_record` VALUES (39, 'a632534d-8980-4bd9-b8d8-f1e6747c2cb4', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:07:13', '2024-05-30 21:07:13', NULL, NULL, '2024-05-30 21:07:12', 0, '2024-05-30 21:07:12', 0, 1, 'fe10a30bedae49c396fe6f5e1fd2f106', 2, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[2, 19]');
+INSERT INTO `celery_task_record` VALUES (40, '32a93d7a-30a1-40e4-a829-cc1621f758df', 'zerorunner.batch_async_run_testcase', 20, 'SUCCESS', 'None', '2024-05-30 21:11:39', '2024-05-30 21:11:40', NULL, NULL, '2024-05-30 21:11:39', 0, '2024-05-30 21:11:39', 0, 1, '907ab8dd0dad473dae5e954022490282', 13, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[]');
+INSERT INTO `celery_task_record` VALUES (41, '1c596fa5-68c0-4c1a-9910-ec2196fc74a9', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:11:40', '2024-05-30 21:11:41', NULL, NULL, '2024-05-30 21:11:40', 0, '2024-05-30 21:11:40', 0, 1, '907ab8dd0dad473dae5e954022490282', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 24, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"case\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1]');
+INSERT INTO `celery_task_record` VALUES (42, '71f53440-da51-4124-9110-52575ad02662', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:11:41', '2024-05-30 21:11:41', NULL, NULL, '2024-05-30 21:11:40', 0, '2024-05-30 21:11:40', 0, 1, '907ab8dd0dad473dae5e954022490282', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"module\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 21]');
+INSERT INTO `celery_task_record` VALUES (43, '6c0ede5c-498a-424e-99e2-7564bf0d6ea6', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:11:41', '2024-05-30 21:11:41', NULL, NULL, '2024-05-30 21:11:41', 0, '2024-05-30 21:11:41', 0, 1, '907ab8dd0dad473dae5e954022490282', 1, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"project\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[1, 22]');
+INSERT INTO `celery_task_record` VALUES (44, '97cc6c1f-0279-4cac-bb36-2b3d13bb4b8a', 'celery_worker.tasks.test_case.async_run_testcase', 10, 'SUCCESS', 'None', '2024-05-30 21:11:41', '2024-05-30 21:11:42', NULL, NULL, '2024-05-30 21:11:41', 0, '2024-05-30 21:11:41', 0, 1, '907ab8dd0dad473dae5e954022490282', 2, '{\"case_ids\": [1], \"project_ids\": [581], \"module_ids\": [34], \"case_env_id\": 25, \"project_env_id\": 25, \"ui_ids\": null, \"ui_env_id\": null, \"name\": \"bzx_test001\", \"project_id\": 581, \"run_type\": \"project\", \"run_mode\": 30, \"env_id\": null, \"exec_user_id\": 7, \"exec_user_name\": \"admin\"}', '[2, 22]');
 
 -- ----------------------------
 -- Table structure for coverage_backend_report
@@ -582,12 +614,6 @@ CREATE TABLE `data_source`  (
 -- ----------------------------
 -- Records of data_source
 -- ----------------------------
-INSERT INTO `data_source` VALUES (1, 'mysql', 'xiaobaicodes.com', 3306, 'zero_autotest', 'Bai.123456', 'zero_autotest', 8, NULL, '2023-05-17 19:15:00', 0, 7, 7, NULL);
-INSERT INTO `data_source` VALUES (2, 'mysql', '127.0.0.1', 8888, 'xioabai', 'passwowrd', 'test', NULL, '2022-09-21 14:19:30', '2023-05-17 19:15:02', 0, 7, 7, NULL);
-INSERT INTO `data_source` VALUES (3, 'mysql', '127.0.0.1', 8888, 'xiaobao', 'xiaobai', 'test12', NULL, '2022-09-21 14:32:58', '2023-05-17 19:15:02', 0, 7, 7, NULL);
-INSERT INTO `data_source` VALUES (4, 'mysql', 'test', 3006, '', '', 'test', 7, '2022-10-10 17:19:09', '2023-05-17 19:15:03', 0, 7, 7, NULL);
-INSERT INTO `data_source` VALUES (5, 'mysql', 'xiaobaicodes.com', 13306, 'zero_test_user', 'eJFYXP37KuEAMityTmfpPBTSgLGTHRLfhpPWRhlatEW0JToXixMaLcdMld6gGn2Lmz7ArYG90IMbyhs+to6lxPi7o/8tzdKYuobVBAyaXm7Zu7wkM2eWGqFXKRxs75Y77AgGyJ3ODx+ho1eiqQ/yp9OH6V4dw/fmftl5RkDlhrk=', 'zero_测试数据库', NULL, '2023-02-06 14:49:17', '2023-05-17 17:03:39', 1, 7, 7, 'db0ad77b991444caa1c86be7a4ab1949');
-INSERT INTO `data_source` VALUES (6, 'mysql', 'xiaobaicodes.com', 3306, 'zero_autotest', 'Bai.123456', 'zero_autotest', NULL, '2023-05-15 09:25:36', '2023-05-17 19:15:04', 0, 7, 7, '26d311a7ea154a38a3c9b41559fffd22');
 
 -- ----------------------------
 -- Table structure for env
@@ -613,8 +639,6 @@ CREATE TABLE `env`  (
 -- ----------------------------
 -- Records of env
 -- ----------------------------
-INSERT INTO `env` VALUES (24, '自营', 'http://t.weather.sojson.com', '', '2023-10-11 14:28:02', '2023-10-13 15:15:18', 1, 7, 7, '[]', '[]', 'null', 'f74ea7c96f4f4b76b43280e642028d9a');
-INSERT INTO `env` VALUES (25, '百度测试', 'www.baidu.com', '', '2023-10-13 18:03:06', '2023-10-18 17:14:39', 1, 7, 1, '[{\"key\": \"req\", \"value\": \"${get_rand(size=5)}\", \"remarks\": \"\"}, {\"key\": \"b\", \"value\": \"$a\", \"remarks\": \"\"}, {\"key\": \"a\", \"value\": \"1\", \"remarks\": \"\"}]', '[]', 'null', '860c96bbc52e4923951ca24b2df9f1eb');
 
 -- ----------------------------
 -- Table structure for env_config
@@ -786,13 +810,13 @@ CREATE TABLE `lookup`  (
   `updated_by` int(11) NULL DEFAULT NULL,
   `trace_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'trace_id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 12 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of lookup
 -- ----------------------------
-INSERT INTO `lookup` VALUES (3, 'api_report_run_type', '测试报告执行类型', '2022-05-04 12:48:38', '2023-10-23 14:08:26', 1, 7, 1, '02fea3346229426086d427ac3173a853');
-INSERT INTO `lookup` VALUES (4, 'api_report_run_mode', '测试报告运行模式', '2022-05-04 14:29:45', '2022-05-04 14:29:44', 1, 7, 7, NULL);
+INSERT INTO `lookup` VALUES (3, 'api_report_run_mode', '测试报告执行类型', '2022-05-04 12:48:38', '2024-05-30 21:13:01', 1, 7, 7, 'a2b2b89c09bf4f288b79e49d8bda76b9');
+INSERT INTO `lookup` VALUES (4, 'api_report_run_type', '测试报告运行模式', '2022-05-04 14:29:45', '2024-05-30 21:13:22', 1, 7, 7, 'c151cbd378f2436cba7e81edaf89fe10');
 INSERT INTO `lookup` VALUES (5, 'api_timed_task_status', '定时任务运行状态', '2022-05-04 16:36:13', '2022-09-15 16:44:26', 1, 7, 7, NULL);
 INSERT INTO `lookup` VALUES (7, 'api_step_type', '用例类型', '2022-12-16 15:55:42', '2022-12-16 15:55:42', 1, 7, 7, NULL);
 
@@ -869,7 +893,7 @@ CREATE TABLE `menu`  (
   INDEX `id_index`(`id`) USING BTREE,
   INDEX `name_index`(`name`) USING BTREE,
   INDEX `enabled_flag_index`(`enabled_flag`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 78 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 80 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of menu
@@ -896,24 +920,25 @@ INSERT INTO `menu` VALUES (50, 49, '/api/apiCase/edit', 'EditApiCase', 'api/apiC
 INSERT INTO `menu` VALUES (51, 28, '/system/lookup', 'systemLookup', 'system/lookup/index.vue', '数据字典', 0, NULL, 0, 'ele-Management', 1, 0, 0, '', 3, NULL, 10, '', '2022-05-03 17:11:59', '2022-05-03 17:11:59', 1, 0, 7, 7, NULL, NULL);
 INSERT INTO `menu` VALUES (53, 0, '/tools', 'tools', 'layout/routerView/parent', '便捷工具', 0, NULL, 0, 'ele-ForkSpoon', 1, 0, 0, '', 5, NULL, 10, '', '2022-06-14 21:08:01', '2023-05-17 16:55:23', 1, 0, 7, 7, NULL, 'b2160537cf404a4c8158c760a9782183');
 INSERT INTO `menu` VALUES (54, 53, '/tools/QueryDB', 'QueryDB', 'tools/queryDB/index.vue', '数据查询', 0, NULL, 0, 'ele-MagicStick', 1, 0, 0, '', 0, NULL, 10, '', '2022-06-14 21:09:29', '2023-10-13 15:09:28', 1, 0, 7, 7, NULL, '9516ca9f7bc4483481f839771c3892e0');
-INSERT INTO `menu` VALUES (57, 0, '/ui', 'ui', 'layout/routerView/parent', 'UI测试', 0, NULL, 0, 'ele-Cherry', 1, 0, 0, 'admin', 3, NULL, 10, '', '2022-08-23 11:05:09', '2023-10-12 19:44:23', 1, 0, 7, 7, NULL, '6b3d418ffeb040478f9be028cdcc3ee5');
+INSERT INTO `menu` VALUES (57, 0, '/ui', 'ui', 'layout/routerView/parent', 'UI测试', 0, NULL, 0, 'ele-Cherry', 1, 0, 0, 'admin', 3, NULL, 10, '', '2022-08-23 11:05:09', '2024-05-30 14:09:51', 0, 0, 7, 7, NULL, '6b3d418ffeb040478f9be028cdcc3ee5');
 INSERT INTO `menu` VALUES (58, 32, '/api/dataSource', 'ApiDataSource', 'api/dataSource/index.vue', '数据源管理', 0, NULL, 0, 'ele-Tickets', 1, 0, 0, '', 9, NULL, 10, '', '2022-09-13 14:34:44', '2022-09-13 14:34:43', 1, 0, 7, 7, NULL, NULL);
 INSERT INTO `menu` VALUES (59, 53, '/tools/testcase', 'apiTest', 'api/apiTest/index.vue', '接口测试', 0, NULL, 1, '', 0, 0, 0, '', 0, NULL, 10, '', '2022-09-13 16:00:00', '2023-07-31 10:31:56', 1, 0, 7, 7, NULL, '730571c1b89d46d492c1f07b83a0b726');
 INSERT INTO `menu` VALUES (61, 28, '/system/personal', 'personal', 'system/personal/index', '个人中心', 0, NULL, 0, 'ele-User', 1, 0, 0, '', 1, NULL, 10, '', '2023-01-16 16:37:40', '2023-10-08 14:30:39', 1, 3, 7, 7, NULL, 'fab84ae3470d41a884c68b509a633d72');
 INSERT INTO `menu` VALUES (62, 53, '/websocket', '连接1', 'tools/websocket/index.vue', '连接1', 0, NULL, 1, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-02-09 12:27:42', '2023-07-31 10:31:39', 1, 0, 7, 7, NULL, 'e514be038d7c4f779854292fc9a4bc31');
-INSERT INTO `menu` VALUES (63, 0, '/projectOrModule', '/projectOrModule', 'layout/routerView/parent', '项目/模块', 0, '', 0, 'ele-Files', 1, 0, 0, '0', 1, NULL, 10, '', '2023-02-23 11:07:56', '2023-10-12 20:08:33', 1, 0, NULL, 7, NULL, 'd08da515ca754613a1ef591310dd3be3');
-INSERT INTO `menu` VALUES (64, 57, '/ui/page', 'uiPage', 'ui/page/index.vue', '页面管理', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-05-26 11:12:13', '2023-05-26 11:12:57', 1, 0, 7, 7, NULL, 'ae8cbb970fe94b57a74243e5a2448b5b');
-INSERT INTO `menu` VALUES (65, 64, '/ui/page/edite', 'EditPage', 'ui/page/EditPage.vue', '页面编辑', 0, NULL, 1, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-05-26 14:47:33', '2023-05-26 15:21:36', 1, 0, 7, 7, NULL, 'dcbd130fd512496ba3b95292bfaf370c');
-INSERT INTO `menu` VALUES (66, 57, '/ui/uiCase', 'uiCase', 'ui/uiCase/index.vue', '测试用例', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-05-27 23:29:46', '2023-06-14 16:18:50', 1, 0, 7, 7, NULL, '0041e560003f4337b5d9326a499e0447');
-INSERT INTO `menu` VALUES (67, 66, '/ui/uiCase/edit', 'editUiCase', 'ui/uiCase/editUiCase.vue', '用例编辑', 0, NULL, 1, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-06-02 10:02:18', '2023-06-14 16:18:57', 1, 0, 7, 7, NULL, 'a745d4ae3e7940ddbb8515ea06a26fb5');
-INSERT INTO `menu` VALUES (68, 57, '/ui/uiReport', 'uiReport', 'ui/uiReport/index.vue', '测试报告', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-06-13 16:48:52', '2023-06-14 16:19:01', 1, 0, 7, 7, NULL, '325eeece337b450c8e04bc83d0a802d3');
+INSERT INTO `menu` VALUES (63, 0, '/projectOrModule', '/projectOrModule', 'layout/routerView/parent', '项目/模块/功能', 0, '', 0, 'ele-Files', 1, 0, 0, '0', 1, NULL, 10, '', '2023-02-23 11:07:56', '2024-05-30 12:11:09', 1, 0, NULL, 7, NULL, 'f3aaf87ee47642279093cda167e20f75');
+INSERT INTO `menu` VALUES (64, 57, '/ui/page', 'uiPage', 'ui/page/index.vue', '页面管理', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-05-26 11:12:13', '2024-05-30 14:09:49', 0, 0, 7, 7, NULL, 'ae8cbb970fe94b57a74243e5a2448b5b');
+INSERT INTO `menu` VALUES (65, 64, '/ui/page/edite', 'EditPage', 'ui/page/EditPage.vue', '页面编辑', 0, NULL, 1, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-05-26 14:47:33', '2024-05-30 14:09:47', 0, 0, 7, 7, NULL, 'dcbd130fd512496ba3b95292bfaf370c');
+INSERT INTO `menu` VALUES (66, 57, '/ui/uiCase', 'uiCase', 'ui/uiCase/index.vue', '测试用例', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-05-27 23:29:46', '2024-05-30 14:09:45', 0, 0, 7, 7, NULL, '0041e560003f4337b5d9326a499e0447');
+INSERT INTO `menu` VALUES (67, 66, '/ui/uiCase/edit', 'editUiCase', 'ui/uiCase/editUiCase.vue', '用例编辑', 0, NULL, 1, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-06-02 10:02:18', '2024-05-30 14:09:42', 0, 0, 7, 7, NULL, 'a745d4ae3e7940ddbb8515ea06a26fb5');
+INSERT INTO `menu` VALUES (68, 57, '/ui/uiReport', 'uiReport', 'ui/uiReport/index.vue', '测试报告', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-06-13 16:48:52', '2024-05-30 14:09:38', 0, 0, 7, 7, NULL, '325eeece337b450c8e04bc83d0a802d3');
 INSERT INTO `menu` VALUES (69, 0, '/job', 'job', 'layout/routerView/parent', '定时任务', 0, NULL, 0, 'ele-AlarmClock', 1, 0, 0, '0', 4, NULL, 10, '', '2023-06-15 19:53:23', '2023-06-15 20:36:07', 1, 0, 7, 7, NULL, '0fe72ee35bdc41ca9adc60e01576383f');
 INSERT INTO `menu` VALUES (70, 69, '/job/taskRecord', 'taskRecord', 'job/taskRecord/index.vue', '执行记录', 0, NULL, 0, 'ele-Document', 1, 0, 0, '0', 2, NULL, 10, '', '2023-06-15 19:54:28', '2023-06-15 20:19:14', 1, 0, 7, 7, NULL, '9f7d85770e004da6a97d4e0ec29a21c3');
-INSERT INTO `menu` VALUES (73, 0, '/precisionTest', 'precisionTest', 'layout/routerView/parent', '精准测试', 0, NULL, 0, 'ele-Grape', 1, 0, 0, '0', 6, NULL, 10, '', '2023-08-17 20:17:19', '2023-09-07 15:38:45', 1, 0, 7, 7, NULL, 'd7a0498eb7f24f09a7997342085bd58b');
-INSERT INTO `menu` VALUES (74, 75, '/precisionTest/CoverageDetail', 'CoverageDetail', 'precisionTest/CoverageDetail/index.vue', '覆盖率详情', 0, NULL, 1, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-08-17 20:19:57', '2023-09-13 17:36:14', 1, 0, 7, 1, NULL, 'a009e130592f4a92b419bb49e3004bc2');
-INSERT INTO `menu` VALUES (75, 73, '/precisionTest/CoverageList', 'CoverageList', 'precisionTest/CoverageList/index.vue', '覆盖率报告', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-08-31 11:12:08', '2023-09-13 17:35:48', 1, 0, 7, 1, NULL, 'fb4f611267b045a09c3081f76cffd6c6');
-INSERT INTO `menu` VALUES (76, 73, '/precisionTest/RepositoryManager', 'RepositoryManager', 'precisionTest/RepositoryManager/index.vue', '仓库管理', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-09-04 11:24:55', '2023-09-04 11:25:26', 1, 0, 7, 7, NULL, 'dc4a6250d18647fe8ebf503ec79678a4');
+INSERT INTO `menu` VALUES (73, 0, '/precisionTest', 'precisionTest', 'layout/routerView/parent', '精准测试', 0, NULL, 0, 'ele-Grape', 1, 0, 0, '0', 6, NULL, 10, '', '2023-08-17 20:17:19', '2024-05-30 14:09:30', 0, 0, 7, 7, NULL, 'd7a0498eb7f24f09a7997342085bd58b');
+INSERT INTO `menu` VALUES (74, 75, '/precisionTest/CoverageDetail', 'CoverageDetail', 'precisionTest/CoverageDetail/index.vue', '覆盖率详情', 0, NULL, 1, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-08-17 20:19:57', '2024-05-30 14:09:25', 0, 0, 7, 1, NULL, 'a009e130592f4a92b419bb49e3004bc2');
+INSERT INTO `menu` VALUES (75, 73, '/precisionTest/CoverageList', 'CoverageList', 'precisionTest/CoverageList/index.vue', '覆盖率报告', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-08-31 11:12:08', '2024-05-30 14:09:27', 0, 0, 7, 1, NULL, 'fb4f611267b045a09c3081f76cffd6c6');
+INSERT INTO `menu` VALUES (76, 73, '/precisionTest/RepositoryManager', 'RepositoryManager', 'precisionTest/RepositoryManager/index.vue', '仓库管理', 0, NULL, 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2023-09-04 11:24:55', '2024-05-30 14:09:21', 0, 0, 7, 7, NULL, 'dc4a6250d18647fe8ebf503ec79678a4');
 INSERT INTO `menu` VALUES (77, 53, '/tools/JsonParse', 'JsonParse', 'tools/JsonParse/index.vue', 'Json解析', 0, NULL, 0, 'ele-ColdDrink', 1, 0, 0, '0', 0, NULL, 10, '', '2023-09-23 09:48:10', '2023-09-25 17:31:17', 1, 0, 1, 7, NULL, 'a7a991b583274a09aaa7ce03b5b2235b');
+INSERT INTO `menu` VALUES (79, 63, '/storyInfo', 'storyInfo', '/api/story/index.vue', '功能管理', 0, '', 0, '', 1, 0, 0, '0', 0, NULL, 10, '', '2024-05-30 14:51:37', '2024-05-30 14:51:37', 1, 0, 7, 7, NULL, '309f573b979942c3924096fdf54eb8e7');
 
 -- ----------------------------
 -- Table structure for menu_view_history
@@ -966,13 +991,14 @@ CREATE TABLE `module_info`  (
   INDEX `id_index`(`id`) USING BTREE,
   INDEX `name_index`(`name`) USING BTREE,
   INDEX `enabled_flag_index`(`enabled_flag`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 35 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of module_info
 -- ----------------------------
 INSERT INTO `module_info` VALUES (7, '2022-03-19 22:25:49', '2022-07-14 09:31:47', 0, '博客内容', 577, NULL, '小白', NULL, NULL, '小白', 7, 7, NULL, '4', NULL);
 INSERT INTO `module_info` VALUES (34, '2023-10-23 16:59:36', '2023-10-24 10:07:33', 1, '测试模块', 581, NULL, '', '', NULL, NULL, 1, 7, NULL, NULL, 'cb137ddcbf9d4b04b4995bce5a1f3e8d');
+INSERT INTO `module_info` VALUES (35, '2024-05-30 21:06:23', '2024-05-30 21:06:23', 1, '测试模块2', 581, NULL, '', '', NULL, NULL, 7, 7, NULL, NULL, 'f51054f2c0cb4ecb846e3d3d722a77c9');
 
 -- ----------------------------
 -- Table structure for notify
@@ -1025,7 +1051,7 @@ CREATE TABLE `project_info`  (
   INDEX `id_index`(`id`) USING BTREE,
   INDEX `name_index`(`name`) USING BTREE,
   INDEX `enabled_flag_index`(`enabled_flag`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1699677678757617616 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 582 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of project_info
@@ -1109,13 +1135,71 @@ CREATE TABLE `roles`  (
   `status` int(11) NULL DEFAULT 10 COMMENT '角色状态 10 启用，20 禁用',
   `trace_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'trace_id',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 15 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of roles
 -- ----------------------------
-INSERT INTO `roles` VALUES (1, '管理员', '管理员', 10, '1,33,34,38,48,50,42,41,72,58,65,67,68,70,36,54,59,62,77,74,76,61,29,31,30,51', '2021-04-12 16:56:20', '2023-09-23 09:49:17', 1, 1, 7, 10, '51e01f09d66743efa9f9cf1ab546d7dc');
+INSERT INTO `roles` VALUES (1, '管理员', '管理员', 10, '1,79,33,34,38,48,50,42,41,35,58,70,36,54,59,62,77,29,31,61,30,51', '2021-04-12 16:56:20', '2024-05-30 14:51:44', 1, 7, 7, 10, '32b479b4cfa34b14b8bcacff8659ec1b');
 INSERT INTO `roles` VALUES (3, '测试工程师', '测试工程师', 10, '1,78,33,34,38,48,50,42,41,72,58,65,67,68,70,36,54,59,62', '2021-05-21 17:24:53', '2023-09-27 17:46:14', 1, 16, 7, 10, 'a431078051684e74bc1440044a13a07c');
+
+-- ----------------------------
+-- Table structure for story_info
+-- ----------------------------
+DROP TABLE IF EXISTS `story_info`;
+CREATE TABLE `story_info`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `project_id` int(11) NULL DEFAULT NULL,
+  `module_id` int(11) NULL DEFAULT NULL,
+  `jira_task` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `story_url` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
+  `remarks` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci NULL DEFAULT NULL,
+  `creation_date` datetime NULL DEFAULT NULL,
+  `updation_date` datetime NULL DEFAULT NULL,
+  `enabled_flag` int(11) NOT NULL DEFAULT 1,
+  `created_by` int(11) NULL DEFAULT NULL,
+  `updated_by` int(11) NULL DEFAULT NULL,
+  `trace_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'trace_id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Records of story_info
+-- ----------------------------
+INSERT INTO `story_info` VALUES (1, '测试功能', 581, 34, 'test', 'tes', 'dddd', '2024-05-30 15:05:56', '2024-05-30 15:11:33', 1, 7, 7, '6a483fb413ef41faac5c8c4a3730101f');
+INSERT INTO `story_info` VALUES (2, '测试功能2', 581, 35, NULL, NULL, NULL, '2024-05-30 21:06:45', '2024-05-30 21:06:45', 1, 7, 7, '92297b9eaf9d4507a6183c9d612b9cd2');
+
+-- ----------------------------
+-- Table structure for timed_task_case
+-- ----------------------------
+DROP TABLE IF EXISTS `timed_task_case`;
+CREATE TABLE `timed_task_case`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `task_id` bigint(20) NULL DEFAULT NULL,
+  `case_id` bigint(20) NULL DEFAULT NULL,
+  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型, case, ui, script, api',
+  `creation_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
+  `updation_date` datetime NULL DEFAULT NULL COMMENT '更新时间',
+  `enabled_flag` tinyint(1) NULL DEFAULT 1 COMMENT '是否删除',
+  `created_by` int(11) NULL DEFAULT NULL,
+  `updated_by` int(11) NULL DEFAULT NULL,
+  `trace_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'trace_id',
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 34 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+
+-- ----------------------------
+-- Records of timed_task_case
+-- ----------------------------
+INSERT INTO `timed_task_case` VALUES (25, 13, 1, 'case', '2024-05-30 16:07:47', '2024-05-30 20:29:45', 0, 7, 7, '8bc1f8ae04334d53bc4d68e461b87f5e');
+INSERT INTO `timed_task_case` VALUES (26, 13, 1, 'case', '2024-05-30 16:27:22', '2024-05-30 20:29:45', 0, 7, 7, '376380b5dc754fbcb5075521cba90f93');
+INSERT INTO `timed_task_case` VALUES (27, 13, 1, 'case', '2024-05-30 16:28:52', '2024-05-30 20:29:45', 0, 7, 7, '5497060d385749899615e7e47bec5029');
+INSERT INTO `timed_task_case` VALUES (28, 13, 1, 'case', '2024-05-30 17:10:42', '2024-05-30 20:29:45', 0, 7, 7, 'a6a77f47576a469a82cf0c8a176347d3');
+INSERT INTO `timed_task_case` VALUES (29, 13, 1, 'case', '2024-05-30 17:11:33', '2024-05-30 20:29:45', 0, 7, 7, '15d5a64022d04dd9b745f54b4ef37591');
+INSERT INTO `timed_task_case` VALUES (30, 13, 1, 'case', '2024-05-30 20:06:18', '2024-05-30 20:29:45', 0, 7, 7, '2158a532e0fd48ddaeb898a5825f1dd5');
+INSERT INTO `timed_task_case` VALUES (31, 13, 1, 'case', '2024-05-30 20:23:31', '2024-05-30 20:29:45', 0, 7, 7, 'd215b5a0b1694f0986a6fc01e92956bd');
+INSERT INTO `timed_task_case` VALUES (32, 13, 1, 'case', '2024-05-30 20:23:40', '2024-05-30 20:29:45', 0, 7, 7, '60813ea4062e4868ad8d756820acb5ce');
+INSERT INTO `timed_task_case` VALUES (33, 13, 1, 'case', '2024-05-30 20:29:45', '2024-05-30 20:29:45', 1, 7, 7, 'b664581770aa44bf875ee846a8a10d57');
 
 -- ----------------------------
 -- Table structure for ui_case
@@ -1146,19 +1230,6 @@ CREATE TABLE `ui_case`  (
 -- ----------------------------
 -- Records of ui_case
 -- ----------------------------
-INSERT INTO `ui_case` VALUES ('百度搜索', 'null', '[{\"id\": null, \"data\": \"http://baidu.com\", \"name\": \"测试11111\", \"index\": 1, \"action\": \"open\", \"cookie\": null, \"enable\": true, \"output\": null, \"script\": \"测试111111\", \"page_id\": \"\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"su\", \"location_method\": \"name\", \"page_element_id\": null}, {\"id\": null, \"data\": \"哇哈哈\", \"name\": \"测试步骤\", \"index\": 2, \"action\": \"input\", \"cookie\": null, \"enable\": true, \"output\": null, \"script\": \"print(\\\"test1111111111111\\\")\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"8\", \"action_value\": [\"常规操作\", \"input\"], \"location_value\": \"kw\", \"location_method\": \"id\", \"page_element_id\": [1, 8]}]', 'null', 'null', 'null', '测试百度', 1, '2023-05-27 23:23:51', 7, '2023-07-24 19:14:42', 7, 0, 'a8286c3fd17e44f9a9332fd9158b24ae', '1.0.0', 577, 17);
-INSERT INTO `ui_case` VALUES ('baidu1', '[\"测试\"]', '[{\"id\": null, \"data\": \"http://baidu.com\", \"name\": \"ces 1\", \"index\": 1, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"su\", \"location_method\": \"name\", \"page_element_id\": null}]', 'null', 'null', 'null', '111', 2, '2023-06-15 14:37:01', 7, '2023-07-24 19:14:44', 7, 0, '610463528b1d410791240929c06734d5', NULL, 577, 17);
-INSERT INTO `ui_case` VALUES ('login', '[]', '[{\"id\": null, \"data\": \"\", \"name\": \"打开浏览器\", \"index\": 1, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"123\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"3\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"su\", \"location_method\": \"name\", \"page_element_id\": [1, 3]}]', 'null', 'null', 'null', '', 3, '2023-07-04 16:36:25', 7, '2023-07-24 19:14:45', 7, 0, '708c3f755c5e4999a68d1063858abc2c', NULL, 577, 17);
-INSERT INTO `ui_case` VALUES ('ces', '[]', '[{\"id\": null, \"data\": \"\", \"name\": \"\", \"index\": 1, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"3\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"su\", \"location_method\": \"name\", \"page_element_id\": [1, 3]}]', 'null', 'null', 'null', '', 4, '2023-07-06 14:19:40', 7, '2023-07-24 19:14:40', 7, 0, '531c9c24e21440ae890aac232bd18021', NULL, 577, 17);
-INSERT INTO `ui_case` VALUES ('1', '[]', '[{\"id\": null, \"data\": \"123\", \"name\": \"222222222222\", \"index\": 1, \"action\": \"input\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"1\", \"action_value\": [\"常规操作\", \"input\"], \"location_value\": \"username2\", \"location_method\": \"name\", \"page_element_id\": [1, 1]}, {\"id\": null, \"data\": \"11\", \"name\": \"1222222222\", \"index\": 2, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"dddddddddddd\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"3\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"su\", \"location_method\": \"name\", \"page_element_id\": [1, 3]}]', 'null', 'null', 'null', '1', 5, '2023-07-07 19:49:46', 7, '2023-08-23 10:02:07', 7, 1, '44fd2981a61f461f96ccf05a1748bf56', NULL, 577, 17);
-INSERT INTO `ui_case` VALUES ('发送文字消息给小佘', '[]', '[{\"id\": null, \"data\": \"\", \"name\": \"安达市多\", \"index\": 1, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"18\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"15\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"asdasd\", \"location_method\": \"id\", \"page_element_id\": [18, 15]}, {\"id\": null, \"data\": \"\", \"name\": \"打开微信\", \"index\": 2, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"17\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"14\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"22\", \"location_method\": \"xpath\", \"page_element_id\": [17, 14]}]', 'null', 'null', 'null', '', 6, '2023-08-15 18:03:02', 7, '2023-10-08 09:17:19', 1, 1, 'f86384edc92c4007b129c046c8e9e8e7', NULL, 582, 18);
-INSERT INTO `ui_case` VALUES ('12333', '[]', '[{\"id\": null, \"data\": \"python\", \"name\": \"\", \"index\": 1, \"action\": \"input\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"19\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"18\", \"action_value\": [\"常规操作\", \"input\"], \"location_value\": \"kw\", \"location_method\": \"id\", \"page_element_id\": [19, 18]}, {\"id\": null, \"data\": \"\", \"name\": \"\", \"index\": 2, \"action\": \"click\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"19\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"19\", \"action_value\": [\"常规操作\", \"click\"], \"location_value\": \"su\", \"location_method\": \"id\", \"page_element_id\": [19, 19]}]', 'null', 'null', 'null', '', 7, '2023-08-17 14:30:39', 7, '2023-08-17 14:30:39', 7, 1, 'd60e858250a4466a96b372385cfa7e77', NULL, 582, 18);
-INSERT INTO `ui_case` VALUES ('12333fff', '[]', '[{\"id\": null, \"data\": \"python\", \"name\": \"\", \"index\": 1, \"action\": \"input\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"19\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"18\", \"action_value\": [\"常规操作\", \"input\"], \"location_value\": \"kw\", \"location_method\": \"id\", \"page_element_id\": [19, 18]}, {\"id\": null, \"data\": \"\", \"name\": \"\", \"index\": 2, \"action\": \"click\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"19\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"19\", \"action_value\": [\"常规操作\", \"click\"], \"location_value\": \"su\", \"location_method\": \"id\", \"page_element_id\": [19, 19]}]', 'null', 'null', 'null', '', 8, '2023-08-17 14:30:46', 7, '2023-08-17 14:30:46', 7, 1, '44ff128cc1b14a22a1c700538e7ab96d', NULL, 582, 18);
-INSERT INTO `ui_case` VALUES ('12333fff', '[]', '[{\"id\": null, \"data\": \"python\", \"name\": \"\", \"index\": 1, \"action\": \"input\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"19\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"18\", \"action_value\": [\"常规操作\", \"input\"], \"location_value\": \"kw\", \"location_method\": \"id\", \"page_element_id\": [19, 18]}, {\"id\": null, \"data\": \"\", \"name\": \"\", \"index\": 2, \"action\": \"click\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"19\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"19\", \"action_value\": [\"常规操作\", \"click\"], \"location_value\": \"su\", \"location_method\": \"id\", \"page_element_id\": [19, 19]}]', 'null', 'null', 'null', '', 9, '2023-08-17 14:30:48', 7, '2023-08-22 14:32:07', 7, 0, '9e9e102da77847d7a8c7df8afedea797', NULL, 582, 18);
-INSERT INTO `ui_case` VALUES ('啥事', '[]', '[{\"id\": null, \"data\": \"哈哈哈\", \"name\": \"asgasgaags\", \"index\": 1, \"action\": \"input\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"dddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddd\\r\\n\\r\\n\\r\\n\\r\\nddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddd\\r\\nddddddddddddddddddddddddddddddddddddd\\r\\nddddddddddddddddddddddddd\\r\\nddddddddddddddddddddddddddddddddd\\r\\n\", \"page_id\": \"20\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"21\", \"action_value\": [\"常规操作\", \"input\"], \"location_value\": \"kw\", \"location_method\": \"id\", \"page_element_id\": [20, 21]}, {\"id\": null, \"data\": \"\", \"name\": \"dddddddddddddddddddddd\", \"index\": 2, \"action\": \"click\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"dddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd\\r\\ndddddddddddddddddddddd\", \"page_id\": \"20\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"22\", \"action_value\": [\"常规操作\", \"click\"], \"location_value\": \"su\", \"location_method\": \"id\", \"page_element_id\": [20, 22]}]', 'null', 'null', 'null', '', 10, '2023-08-23 10:00:27', 7, '2023-09-01 15:52:42', 7, 1, '830f9b17e3bf476f8bc3567190cd4c85', NULL, 577, 17);
-INSERT INTO `ui_case` VALUES ('百度', '[]', '[{\"id\": null, \"data\": \"https://www.baidu.com/\", \"name\": \"\", \"index\": 1, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"4\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"测试\", \"location_method\": \"tag_name\", \"page_element_id\": [1, 4]}, {\"id\": null, \"data\": \"\", \"name\": \"2\", \"index\": 2, \"action\": \"click\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"3\", \"action_value\": [\"常规操作\", \"click\"], \"location_value\": \"su\", \"location_method\": \"name\", \"page_element_id\": [1, 3]}, {\"id\": null, \"data\": \"23231233\", \"name\": \"1\", \"index\": 3, \"action\": \"input\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"8\", \"action_value\": [\"常规操作\", \"input\"], \"location_value\": \"kw\", \"location_method\": \"id\", \"page_element_id\": [1, 8]}]', 'null', 'null', 'null', '', 11, '2023-09-05 17:55:42', 7, '2023-10-17 23:45:17', 7, 1, 'cdbb7712b9d84a4bb2fd48a2c4a1b521', NULL, 582, 18);
-INSERT INTO `ui_case` VALUES ('ces', '[]', '[{\"id\": null, \"data\": \"123\", \"name\": \"12\", \"index\": true, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"3\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"su\", \"location_method\": \"name\", \"page_element_id\": [1, 3]}]', 'null', 'null', 'null', '', 12, '2023-10-13 14:16:13', 7, '2023-10-13 14:16:13', 7, 1, 'dda3d676199a422d8e08724695f1553b', NULL, 577, 17);
-INSERT INTO `ui_case` VALUES ('132', '[]', '[{\"id\": null, \"data\": \"123\", \"name\": \"b步骤1\", \"index\": 1, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"import flask\\r\\nfor i in range(5):\\r\\n    print(i)\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n    \", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"1\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"username2\", \"location_method\": \"name\", \"page_element_id\": [1, 1]}, {\"id\": null, \"data\": \"123213\", \"name\": \"步骤2\", \"index\": true, \"action\": \"open\", \"cookie\": \"\", \"enable\": true, \"output\": \"\", \"script\": \"import a\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\\r\\n\", \"page_id\": \"1\", \"remarks\": null, \"variables\": [], \"breakpoint\": false, \"element_id\": \"1\", \"action_value\": [\"常规操作\", \"open\"], \"location_value\": \"username2\", \"location_method\": \"name\", \"page_element_id\": [1, 1]}]', 'null', 'null', 'null', '', 13, '2023-10-24 09:29:38', 7, '2023-10-24 09:30:56', 7, 1, '816bf0457d734b79a6945465f2d34307', NULL, 581, 34);
 
 -- ----------------------------
 -- Table structure for ui_element
@@ -1185,15 +1256,6 @@ CREATE TABLE `ui_element`  (
 -- ----------------------------
 -- Records of ui_element
 -- ----------------------------
-INSERT INTO `ui_element` VALUES ('休息休息', 'id', 'asdasd', 18, '', 15, '2023-08-17 09:07:52', 7, '2023-08-17 09:07:52', 7, 1, '3f1ef54e4b4d4ad4852996a1123adb15');
-INSERT INTO `ui_element` VALUES ('搜索输入框', 'id', 'kw', 0, '', 16, '2023-08-17 14:27:46', 7, '2023-08-17 14:27:46', 7, 1, '0020e2783b624a81b8df7be7630b0020');
-INSERT INTO `ui_element` VALUES ('搜索按钮', 'id', 'su', 0, '', 17, '2023-08-17 14:28:06', 7, '2023-08-17 14:28:06', 7, 1, '3996ddc77f61437a8bbf01ec5b8451c4');
-INSERT INTO `ui_element` VALUES ('输入框', 'id', 'kw', 19, '', 18, '2023-08-17 14:28:44', 7, '2023-09-05 17:44:00', 7, 1, '6dfb487315194f8caa6fd86c0179608d');
-INSERT INTO `ui_element` VALUES ('按钮', 'id', 'su', 19, '', 19, '2023-08-17 14:28:53', 7, '2023-09-26 09:05:15', 7, 1, '010abce6b966472c993ca5edaeb94158');
-INSERT INTO `ui_element` VALUES ('ss', 'id', 'kw', 0, '', 20, '2023-08-23 09:55:45', 7, '2023-08-23 09:55:45', 7, 1, '09361747ebba4adab3c502b6c6ec04df');
-INSERT INTO `ui_element` VALUES ('输入框', 'id', 'kw', 20, '', 21, '2023-08-23 09:58:16', 7, '2023-09-07 17:39:16', 7, 0, '9f698a28373a428897be8be76421914e');
-INSERT INTO `ui_element` VALUES ('点击', 'id', 'su', 20, '', 22, '2023-08-23 09:59:24', 7, '2023-09-15 23:48:12', 7, 1, '4940d00654c44002be7a2e93f829871e');
-INSERT INTO `ui_element` VALUES ('输入框', 'id', 'kw', 21, '', 23, '2023-09-27 20:06:25', 7, '2023-10-17 23:43:50', 7, 1, 'f871e87f96fa4a9ea02f0e07c6c5e70e');
 
 -- ----------------------------
 -- Table structure for ui_page
@@ -1223,12 +1285,6 @@ CREATE TABLE `ui_page`  (
 -- ----------------------------
 -- Records of ui_page
 -- ----------------------------
-INSERT INTO `ui_page` VALUES ('百度页面', 'https://www.baidu.com', 577, 17, '百度', 1, '2023-05-26 14:35:41', 7, '2023-08-16 11:50:47', 7, 1, '37059d5b5e2f4d4db1bb9864c5ddc8d2', '[\"tags\", \"ces \"]');
-INSERT INTO `ui_page` VALUES ('百度页面测试', 'https://www.baidu.com/', 591, 21, 'test', 17, '2023-07-12 17:26:32', 7, '2023-08-02 18:15:39', 7, 1, '0bbccf58291d44e6b3ad289c9e83f13e', 'null');
-INSERT INTO `ui_page` VALUES ('4434', '4434', 582, 18, NULL, 18, '2023-08-02 17:54:25', 7, '2023-08-17 09:07:58', 7, 1, 'dcd95b7d6794477c82eee51e304944df', 'null');
-INSERT INTO `ui_page` VALUES ('百度搜索', 'https://www.baidu.com', 582, 18, NULL, 19, '2023-08-17 14:28:24', 7, '2023-08-17 14:28:57', 7, 1, '0dadab479f1441db90db66754c51df01', 'null');
-INSERT INTO `ui_page` VALUES ('baidu', 'www.baidu.com', 577, 17, NULL, 20, '2023-08-23 09:55:49', 7, '2023-08-23 09:59:30', 7, 1, '7b0d73f7d4914c19afe9907181fee9cb', 'null');
-INSERT INTO `ui_page` VALUES ('测试百度', 'https://www.baidu.com/', 577, 17, '123', 21, '2023-09-16 00:00:34', 7, '2023-10-23 18:59:52', 7, 1, 'c4624961e93a4a77bd9fb354394f015f', '[\"a\"]');
 
 -- ----------------------------
 -- Table structure for ui_report_detail_0
@@ -1264,7 +1320,7 @@ CREATE TABLE `ui_report_detail_0`  (
   `trace_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL,
   `message` text CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 33 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ui_report_detail_0
@@ -1306,7 +1362,7 @@ CREATE TABLE `ui_reports`  (
   INDEX `ix_ui_reports_module_id`(`module_id`) USING BTREE,
   INDEX `ix_ui_reports_case_id`(`case_id`) USING BTREE,
   INDEX `ix_ui_reports_success`(`success`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 19 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of ui_reports
@@ -1368,7 +1424,7 @@ CREATE TABLE `user`  (
   INDEX `ix_user_password`(`password`) USING BTREE,
   INDEX `ix_user_username`(`username`) USING BTREE,
   INDEX `id_index`(`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 22 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 13 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_unicode_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user
@@ -1410,32 +1466,10 @@ CREATE TABLE `user_login_record`  (
   INDEX `idx_login_record_ret_code`(`ret_code`) USING BTREE,
   INDEX `idx_login_record_token`(`token`) USING BTREE,
   INDEX `idx_login_record_code_logintime`(`code`, `login_time`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
+) ENGINE = InnoDB AUTO_INCREMENT = 7 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user_login_record
--- ----------------------------
-
--- ----------------------------
--- Table structure for timed_task_case
--- ----------------------------
-DROP TABLE IF EXISTS `timed_task_case`;
-CREATE TABLE `timed_task_case`  (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `task_id` bigint(20) NULL DEFAULT NULL,
-  `case_id` bigint(20) NULL DEFAULT NULL,
-  `type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT '类型, case, ui, script, api',
-  `creation_date` datetime NULL DEFAULT NULL COMMENT '创建时间',
-  `updation_date` datetime NULL DEFAULT NULL COMMENT '更新时间',
-  `enabled_flag` tinyint(1) NULL DEFAULT 1 COMMENT '是否删除',
-  `created_by` int(11) NULL DEFAULT NULL,
-  `updated_by` int(11) NULL DEFAULT NULL,
-  `trace_id` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci NULL DEFAULT NULL COMMENT 'trace_id',
-  PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 25 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_general_ci ROW_FORMAT = Dynamic;
-
--- ----------------------------
--- Records of timed_task_case
 -- ----------------------------
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -66,6 +66,8 @@ class ApiCaseIn(BaseModel):
     name: str = Field(None, description="")
     env_id: str = Field(None, description="")
     project_id: int = Field(None, description="")
+    module_id: int = Field(None, description="")
+    story_id: int = Field(None, description="")
     remarks: str = Field(None, description="")
     step_rely: int = Field(1, description="")
     step_data: typing.List[ApiInfoIn] = Field(None, description="步骤类容")

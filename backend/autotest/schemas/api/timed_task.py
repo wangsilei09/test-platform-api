@@ -59,16 +59,18 @@ class IntervalIn(BaseSchema):
 class TimedTasksInSchema(BaseSchema):
     """定时任务保存更新"""
     id: int = Field(None, description="")
-    case_ids: typing.List[typing.Union[int, str]] = Field(None, description="用例id")
+    case_ids: typing.List[typing.Union[int]] = Field(None, description="用例id")
     case_env_id: int = Field(None, description="case 环境id")
     ui_ids: typing.List[typing.Union[int, str]] = Field(None, description="ui用例id")
     ui_env_id: int = Field(None, description="ui case 环境id")
     script_ids: typing.List[typing.Union[int, str]] = Field(None, description="脚本id")
     module_id: int = Field(None, description="")
     project_id: int = Field(None, description="")
+    project_env_id: int = Field(None, description="项目/环境 运行环境id")
+    project_ids: typing.List[typing.Union[int]] = Field(None, description="运行项目ids")
+    module_ids: typing.List[typing.Union[int]] = Field(None, description="运行模块ids")
     run_mode: str = Field(None, description="")
     crontab: str = Field(None, description="")
-    module_ids: str = Field(None, description="")
     name: str = Field(..., description="")
     task: str = Field(None, description="")
     description: str = Field(None, description="")
@@ -89,9 +91,13 @@ class TimedTasksId(BaseSchema):
 
 class TaskKwargsIn(BaseSchema):
     """定时任务执行参数"""
-    case_ids: typing.List[typing.Union[str, int]] = Field(None, description="ids")
+    case_ids: typing.List[typing.Union[int]] = Field(None, description="ids")
+    project_ids: typing.List[typing.Union[int]] = Field(None, description="project_ids")
+    module_ids: typing.List[typing.Union[int]] = Field(None, description="module_ids")
+    module_id: typing.List[typing.Union[int]] = Field(None, description="module_ids")
     case_env_id: int = Field(None, description="环境id")
-    ui_ids: typing.List[typing.Union[str, int]] = Field(None, description="ids")
+    project_env_id: int = Field(None, description="环境id")
+    ui_ids: typing.List[typing.Union[int]] = Field(None, description="ids")
     ui_env_id: int = Field(None, description="环境id")
     name: str = Field(None, description="任务名称")
     project_id: int = Field(None, description="项目id")
