@@ -32,7 +32,7 @@ class CodeEnum(Enum):
     OLD_PASSWORD_ERROR = (10008, "旧密码错误")
 
     # 用户状态 验证  11000 - 12000
-    PARTNER_CODE_TOKEN_EXPIRED_FAIL = (11000, "用户信息以已过期 😂")  # token已过期
+    PARTNER_CODE_TOKEN_EXPIRED_FAIL = (11000, "用户信息已过期 😂")  # token已过期
 
     # 参数类型 12000 - 13000
     PARTNER_CODE_PARAMS_FAIL = (12000, "必填参数不能为空 😅")  # 必填参数不能为空
@@ -62,4 +62,4 @@ class CodeEnum(Enum):
     LOOKUP_CODE_EXIST = (17002, "字典code已存在!")  # 菜单名以存在
 
     # task 定时任务 18000 - 19000
-    TASK_NAME_EXIST = (18000, "定时任务名称以存在")
+    TASK_NAME_EXIST = (18000, "定时任务名称已存在!")
