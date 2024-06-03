@@ -62,4 +62,4 @@ class CodeEnum(Enum):
     LOOKUP_CODE_EXIST = (17002, "字典code已存在!")  # 菜单名以存在
 
     # task 定时任务 18000 - 19000
-    TASK_NAME_EXIST = (18000, "定时任务名称已存在")
+    TASK_NAME_EXIST = (18000, "定时任务名称已存在!")
