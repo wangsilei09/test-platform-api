@@ -68,7 +68,7 @@ python main.py
 celery -A celery_worker.worker.celery worker --pool=solo -l INFO 
 
 # linux 启动
-elery -A celery_worker.worker.celery worker --loglevel=INFO -c 10 -P solo -n zerorunner-celery-worker
+celery -A celery_worker.worker.celery worker --loglevel=INFO -c 10 -P solo -n zerorunner-celery-worker
 
 # 定时任务启动
 celery -A celery_worker.worker.celery beat -S celery_worker.scheduler.schedulers:DatabaseScheduler -l INFO
