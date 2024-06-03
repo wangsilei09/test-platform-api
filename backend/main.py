@@ -57,3 +57,8 @@ async def shutdown():
 # gunicorn main:app --workers 2 --worker-class uvicorn.workers.UvicornWorker --bind 0.0.0.0:8101
 if __name__ == '__main__':
     uvicorn.run(app='main:app', host="127.0.0.1", port=8101, reload=True)
+
+    # 异步任务
+    # celery -A celery_worker.worker.celery worker --loglevel=INFO -c 10 -P solo -n zerorunner-celery-worker
+    # 定时任务
+    # celery -A celery_worker.worker.celery beat -S celery_worker.scheduler.schedulers:DatabaseScheduler -l INFO
