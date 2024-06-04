@@ -12,7 +12,7 @@ class StoryService:
     @staticmethod
     async def list(params: StoryQuery) -> typing.Dict:
         """
-        获取模块列表
+        获取功能列表
         :param params: 查询参数
         :return:
         """
@@ -22,7 +22,7 @@ class StoryService:
     @staticmethod
     async def get_all() -> typing.Dict:
         """
-        获取模块列表
+        获取功能列表
         :return:
         """
         data = await StoryInfo.get_all()
@@ -31,7 +31,7 @@ class StoryService:
     @staticmethod
     async def save_or_update(params: StoryIn) -> typing.Dict:
         """
-        模块保存方法
+        功能保存方法
         :param params: 参数
         :return:
         """
@@ -50,7 +50,7 @@ class StoryService:
     @staticmethod
     async def deleted(params: StoryId):
         """
-        删除模块
+        删除功能
         :param params:
         :return:
         """
