@@ -48,12 +48,6 @@ async def copy_api(params: ApiId):
     return partner_success()
 
 
-@router.post('/setApiStatus', description="接口失效生效")
-async def set_api_status():
-    await ApiInfoService.set_api_status(**parsed_data)
-    return partner_success()
-
-
 @router.post('/deleted', description="删除接口")
 async def deleted(params: ApiId):
     """
@@ -83,22 +77,6 @@ async def run_api(params: ApiRunSchema):
 @router.post('/debugApi', description="debug接口")
 async def debug_api(params: ApiInfoIn):
     data = await ApiInfoService.debug_api(params)
-    return partner_success(data)
-
-
-@router.post('/postman2case', description="文件转用例")
-def postman2case():
-    """
-    postman 文件转用例
-    :return:
-    """
-    postman_file = request.files.get('file', None)
-    if not postman_file:
-        return partner_success(code=codes.PARTNER_CODE_FAIL, msg='请选择导入的postman，json文件！')
-    if postman_file.filename.split('.')[-1] != 'json':
-        return partner_success(code=codes.PARTNER_CODE_FAIL, msg='请选择json文件导入！')
-    json_body = json.load(postman_file)
-    data = ApiInfoService.postman2api(json_body, **request.form)
     return partner_success(data)
 
 
