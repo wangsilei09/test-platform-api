@@ -9,6 +9,8 @@ class StoryIn(BaseModel):
     project_id: int = Field(..., description="项目名称")
     module_id: str = Field(..., description="模块id")
     jira_task: str = Field(None, description="jira任务")
+    dev_user: str = Field(None, description="开发人员")
+    test_user: str = Field(None, description="测试人员")
     story_url: str = Field(None, description="story链接")
     remarks: str = Field(None, description="其他信息'")
 

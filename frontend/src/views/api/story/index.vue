@@ -36,7 +36,7 @@ const state = reactive({
   columns: [
     {label: '序号', columnType: 'index', width: 'auto', show: true},
     {
-      key: 'name', label: '模块名称', width: '', show: true,
+      key: 'name', label: '功能名称', width: '', show: true,
       render: ({row}) => h(ElButton, {
         link: true,
         type: "primary",

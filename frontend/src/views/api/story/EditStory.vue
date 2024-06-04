@@ -56,6 +56,18 @@
           </el-col>
 
           <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-form-item label="开发人员">
+              <el-input v-model="state.form.dev_user" placeholder="开发人员" clearable></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
+            <el-form-item label="测试人员">
+              <el-input v-model="state.form.test_user" placeholder="测试人员" clearable></el-input>
+            </el-form-item>
+          </el-col>
+
+          <el-col :xs="24" :sm="24" :md="24" :lg="24" :xl="24" class="mb20">
             <el-form-item label="简要描述">
               <el-input v-model="state.form.remarks" placeholder="简要描述" clearable></el-input>
             </el-form-item>
@@ -89,6 +101,8 @@ const createForm = () => {
     module_id: null, // 模块id
     story_url: null, // 功能url
     jira_task: null, // jira任务链接
+    dev_user: null,
+    test_user: null,
     remarks: null, // 配置信息
   }
 }

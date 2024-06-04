@@ -11,9 +11,11 @@
             @keyup.enter.native="search">
 
         </el-input>
-
         <el-button class="ml10" type="primary" @click="search">查询
         </el-button>
+        <el-button class="ml10" type="primary" @click="onOpenSaveOrUpdate">新增
+        </el-button>
+
         <!--        <el-button class="ml10" type="warning" @click="onOpenSaveOrUpdate(null)">-->
         <!--          公共函数-->
         <!--        </el-button>-->
@@ -264,8 +266,6 @@ const onOpenSaveOrUpdate = (row) => {
   let query = {}
   if (row) {
     query.id = row.id
-  } else {
-    query.common = 'common'
   }
   router.push({path: "/api/functions/edit", query: query})
   // saveOrUpdateRef.value.openDialog(editType, row);

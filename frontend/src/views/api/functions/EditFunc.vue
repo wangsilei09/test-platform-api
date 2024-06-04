@@ -97,8 +97,8 @@ const state = reactive({
 });
 
 const initData = () => {
-  if (route.query) {
-    useFunctionsApi().getFuncInfo(route.query)
+  if (route.query.id) {
+    useFunctionsApi().getFuncInfo({id: route.query.id})
         .then(res => {
           state.funcFrom.content = res.data.content
           state.originalFuncContent = res.data.content

@@ -15,6 +15,7 @@ class UserIn(BaseModel):
     email: str = Field(None, description='邮箱')
     user_type: str = Field(None, description='用户类型')
     remarks: str = Field(None, description='用户描述')
+    status: int = Field(None, description='用户描述')
     avatar: str = Field(None, description='头像')
     tags: typing.List = Field(None, description='标签')
     roles: typing.List = Field(None, description='权限')
