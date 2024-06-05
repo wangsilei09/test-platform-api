@@ -1,6 +1,6 @@
 import typing
 
-from pydantic import root_validator, Field
+from pydantic import root_validator, Field, BaseModel
 
 from autotest.schemas.base import BaseSchema
 
@@ -56,7 +56,7 @@ class IntervalIn(BaseSchema):
     period: str = Field(..., description="")
 
 
-class TimedTasksInSchema(BaseSchema):
+class TimedTasksInSchema(BaseModel):
     """定时任务保存更新"""
     id: int = Field(None, description="")
     case_ids: typing.List[typing.Union[int]] = Field(None, description="用例id")

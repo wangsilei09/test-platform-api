@@ -35,7 +35,6 @@ class CrontabService:
         if not crontab:
             try:
                 crontab = await Crontab.create_or_update(crontab_query_params)
-                return crontab
             except Exception as err:
                 logger.error(err)
                 raise ValueError(err)
@@ -138,10 +137,12 @@ class TimedTasksService:
             if params.task_type == "crontab":
                 crontab = await CrontabService.save_or_update(CrontabSaveSchema(crontab=params.crontab))
                 params.crontab_id = crontab.get("id")
+                params.interval_id = None
             elif params.task_type == "interval":
                 interval = await IntervalService.save_or_update(
                     IntervalIn(every=params.interval_every, period=params.interval_period))
                 params.interval_id = interval.get("id")
+                params.crontab_id = None
             else:
                 raise ParameterError("请选择调度类型！")
 

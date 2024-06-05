@@ -24,7 +24,7 @@ async def save_or_update(params: TimedTasksInSchema):
 
 @router.post('/taskSwitch', description="定时任务开关")
 async def task_switch(params: TimedTasksId):
-    raise RuntimeError("验收环境关闭该功能，可以手都执行查看效果😊")
+    # raise RuntimeError("验收环境关闭该功能，可以手都执行查看效果😊")
     data = await TimedTasksService.task_switch(params)
     return partner_success(data)
 

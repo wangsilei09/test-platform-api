@@ -6,6 +6,7 @@ from datetime import datetime
 from loguru import logger
 
 from autotest.db.my_redis import redis_pool
+from autotest.exceptions.exceptions import ParameterError, AccessTokenFail
 from autotest.models.system_models import User, Menu, Roles, UserLoginRecord
 from autotest.schemas.system.user import UserLogin, UserIn, UserResetPwd, UserDel, UserQuery, \
     UserLoginRecordIn, UserLoginRecordQuery, UserTokenIn
@@ -188,10 +189,10 @@ class UserService:
         """根据token获取用户信息"""
         token_user_info = await redis_pool.redis.get(TEST_USER_INFO.format(token))
         if not token_user_info:
-            raise ValueError(CodeEnum.PARTNER_CODE_TOKEN_EXPIRED_FAIL.msg)
+            raise AccessTokenFail()
         user_info = await User.get(token_user_info.get("id"))
         if not user_info:
-            raise ValueError(CodeEnum.PARTNER_CODE_TOKEN_EXPIRED_FAIL.msg)
+            raise AccessTokenFail()
         return UserTokenIn(
             id=user_info.id,
             token=token,
