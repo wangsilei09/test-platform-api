@@ -1,4 +1,3 @@
-# coding=utf-8
 """SQLAlchemy session."""
 
 from contextlib import contextmanager

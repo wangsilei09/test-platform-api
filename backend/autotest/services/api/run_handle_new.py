@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import json
 import os
 import traceback
@@ -194,10 +192,9 @@ class HandleStepData(object):
         if request_mode == RequestMode.RAW.value.lower():
             # json
             if self.api_info.request.language.lower() == RawLanguageEnum.JSON.value:
-                try:
+                if self.api_info.request.data:
                     self.step.request.req_json = json.loads(self.api_info.request.data)
-                except Exception:
-                    logger.error(traceback.format_exc())
+                else:
                     self.step.request.data = self.api_info.request.data
             # # text
             # elif self.api_info.request.language.lower() == RawLanguageEnum.TEXT.value:

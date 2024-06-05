@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import time
 
 from fastapi import FastAPI, Request

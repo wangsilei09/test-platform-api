@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import typing
 
 from autotest.utils.response.codes import CodeEnum

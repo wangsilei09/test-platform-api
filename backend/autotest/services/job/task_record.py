@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import typing
 
 from autotest.models.celery_beat_models import CeleryTaskRecord

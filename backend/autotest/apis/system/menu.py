@@ -21,7 +21,6 @@ async def get_all_menus():
 
 @router.post('/saveOrUpdate', description="新增或者更新menu")
 async def save_or_update(params: MenuIn):
-    # return partner_success(code=codes.PARTNER_CODE_FAIL, msg="演示环境不保存！")
     await MenuService.save_or_update(params)
     return partner_success()
 

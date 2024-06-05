@@ -1,4 +1,3 @@
-import json
 import typing
 
 from pydantic import root_validator, BaseModel, Field

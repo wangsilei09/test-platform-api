@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
-
 from fastapi import APIRouter, Request, Form
 
 from autotest.utils.local import g

@@ -1,4 +1,3 @@
-# coding=utf-8
 """Timezone aware Cron schedule Implementation."""
 
 import pytz

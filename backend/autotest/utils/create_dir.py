@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
-
 from pathlib import Path
 
 

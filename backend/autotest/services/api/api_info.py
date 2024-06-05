@@ -3,7 +3,7 @@ import typing
 from loguru import logger
 
 from autotest.exceptions.exceptions import ParameterError
-from autotest.models.api_models import ApiInfo, ApiCaseStep, ApiCaseStep
+from autotest.models.api_models import ApiInfo, ApiCaseStep
 from autotest.models.celery_beat_models import TimedTaskCase
 from autotest.schemas.api.api_info import ApiQuery, ApiId, ApiInfoIn, ApiRunSchema, ApiIds
 from autotest.services.api.api_report import ReportService
@@ -180,28 +180,6 @@ class ApiInfoService:
         summary = runner.run_tests(case_info.get_testcase())
 
         return summary
-
-    @staticmethod
-    def postman2api(json_body: typing.Dict, **kwargs):
-        """postman 转 api"""
-        coll = Collection(json_body)
-        coll.make_test_case()
-        for testcase in coll.case_list:
-            case = {
-                "name": testcase.name,
-                "priority": 3,
-                "code": kwargs.get('code', ''),
-                "project_id": kwargs.get('project_id', None),
-                "module_id": kwargs.get('module_id', None),
-                "service_name": kwargs.get('service_name', ''),
-                "config_id": kwargs.get('config_id', None),
-                "user_id": get_user_id_by_token(),
-                "testcase": testcase.dict(),
-            }
-            parsed_data = ApiInfoIn.parse_obj(case).dict()
-            case_info = ApiInfo()
-            case_info.update(**parsed_data)
-        return len(coll.case_list)
 
     @staticmethod
     async def get_count_by_user():

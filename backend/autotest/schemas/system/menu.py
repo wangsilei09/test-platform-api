@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 from pydantic import BaseModel, Field
 
 from autotest.schemas.base import BaseSchema

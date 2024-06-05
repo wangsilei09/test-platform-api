@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiao bai
 from sqlalchemy import String, Integer, Text, select, func, BigInteger
 from sqlalchemy.orm import aliased, mapped_column
 

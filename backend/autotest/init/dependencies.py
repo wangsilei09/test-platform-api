@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 from fastapi import Request, Security
 from fastapi.security import APIKeyHeader
 

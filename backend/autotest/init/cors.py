@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 from fastapi import FastAPI
 from starlette.middleware.cors import CORSMiddleware
 

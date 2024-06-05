@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiao bai
-
 import json
 import pickle
 import typing

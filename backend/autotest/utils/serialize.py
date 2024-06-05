@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import typing
 from datetime import datetime
 from json import JSONEncoder

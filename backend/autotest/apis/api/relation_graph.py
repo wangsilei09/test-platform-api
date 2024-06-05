@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiao bai
 from fastapi import APIRouter
 
 from autotest.schemas.api.relation_graph import RelationGraphService, RelationIn

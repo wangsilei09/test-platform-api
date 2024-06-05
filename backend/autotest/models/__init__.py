@@ -1,9 +1,5 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
-
 from autotest.db.session import async_engine
 from autotest.models.base import Base
-from autotest.models import ui_models
 
 
 async def init_db():

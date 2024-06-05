@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import uuid
 
 from pydantic import BaseModel, Field

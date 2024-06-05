@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import time
 import typing
 
@@ -9,7 +7,6 @@ from autotest.schemas.api.timed_task import TaskKwargsIn
 from autotest.services.api.api_report import ReportService
 from celery_worker.worker import celery
 from .test_case import async_run_testcase
-from .ui_case import async_run_ui
 
 
 @celery.task(name="zerorunner.batch_async_run_testcase")
@@ -58,8 +55,3 @@ async def batch_async_run_testcase(**kwargs: typing.Any):
         case_ids = [case_info.get("id") for case_info in await ApiCase.get_by_project_ids(params.project_ids)]
         for api_id in case_ids:
             async_run_testcase.apply_async(args=[api_id, report_info.get("id")], kwargs=kwargs, __business_id=api_id)
-
-    if params.ui_ids:
-        kwargs['run_type'] = "ui"
-        for ui_id in params.ui_ids:
-            async_run_ui.apply_async(args=[ui_id], kwargs=kwargs, __business_id=ui_id)

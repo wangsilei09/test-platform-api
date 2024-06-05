@@ -1,7 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
-
-
 from fastapi import APIRouter
 from autotest.apis.api import (
     project,
@@ -17,10 +13,6 @@ from autotest.apis.api import (
     relation_graph
 )
 from autotest.apis.system import user, menu, roles, lookup, id_center, file, statistics
-from autotest.apis.ui import ui_page, ui_element, ui_case, ui_report
-from autotest.apis.coverage import coverage_report, repository_manager
-from autotest.apis.websocket import websocket
-from autotest.apis.websocket.ui import web_ui_case
 from autotest.apis.job import task_record
 
 app_router = APIRouter()
@@ -39,12 +31,6 @@ app_router.include_router(env.router, prefix="/env", tags=["env"])
 app_router.include_router(statistics.router, prefix="/statistics", tags=["statistics"])
 app_router.include_router(relation_graph.router, prefix="/relationGraph", tags=["relationGraph"])
 
-# ui
-app_router.include_router(ui_page.router, prefix="/uiPage", tags=["uiPage"])
-app_router.include_router(ui_element.router, prefix="/uiElement", tags=["uiElement"])
-app_router.include_router(ui_case.router, prefix="/uiCase", tags=["uiCase"])
-app_router.include_router(ui_report.router, prefix="/uiReport", tags=["uiReport"])
-
 # system
 app_router.include_router(user.router, prefix="/user", tags=["user"])
 app_router.include_router(menu.router, prefix="/menu", tags=["menu"])
@@ -53,13 +39,5 @@ app_router.include_router(lookup.router, prefix="/lookup", tags=["lookup"])
 app_router.include_router(id_center.router, prefix="/idCenter", tags=["idCenter"])
 app_router.include_router(file.router, prefix="/file", tags=["file"])
 
-# coverage
-app_router.include_router(coverage_report.router, prefix="/coverage/report", tags=["coverage"])
-app_router.include_router(repository_manager.router, prefix="/coverage/repository", tags=["repository"])
-
 # job
 app_router.include_router(task_record.router, prefix="/job", tags=["job"])
-
-# websocket
-app_router.include_router(websocket.router, prefix="/ws", tags=["websocket"])
-app_router.include_router(web_ui_case.router, prefix="/ws/uiCase", tags=["UIWebsocket"])

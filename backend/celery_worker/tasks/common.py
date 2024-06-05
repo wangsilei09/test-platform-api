@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
-
 from celery_worker.worker import celery
 from celery_worker.base import run_async
 from autotest.schemas.api.projectquery import ProjectIn

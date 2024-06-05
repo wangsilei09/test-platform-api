@@ -1,5 +1,3 @@
-import json
-
 from fastapi import APIRouter
 
 from autotest.utils.response.http_response import partner_success

@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
-
 import traceback
 from fastapi import FastAPI
 from fastapi.exceptions import RequestValidationError

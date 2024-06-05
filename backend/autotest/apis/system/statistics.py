@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 from fastapi import APIRouter
 
 from autotest.utils.response.http_response import partner_success

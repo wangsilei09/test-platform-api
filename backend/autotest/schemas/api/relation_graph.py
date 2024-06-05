@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiao bai
 import typing
 
 from pydantic import BaseModel, Field

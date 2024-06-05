@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import typing
 
 from sqlalchemy import String, Text, Integer, DateTime, select, update, Index, JSON, Boolean

@@ -1,5 +1,3 @@
-# coding=utf-8
-
 import logging
 import datetime as dt
 from multiprocessing.util import Finalize

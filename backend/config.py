@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
 import os
 import typing
 from pathlib import Path
@@ -79,7 +77,6 @@ class Configs(BaseSettings):
         'celery_worker.tasks.test_case',
         'celery_worker.tasks.common',
         'celery_worker.tasks.task_run',
-        'celery_worker.tasks.ui_case',
     ]
     # task_queues = (
     #     Queue('default', routing_key='default'),
