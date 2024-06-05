@@ -1,6 +1,3 @@
-# -*- coding: utf-8 -*-
-# @author: xiaobai
-
 import click
 import uvicorn
 from fastapi import FastAPI, Depends
